@@ -44,8 +44,7 @@
 						<h:panelGrid columns="3">
 							<p:graphicImage value="#{resource['/images/logo.png']}"
 								style="display: block" /> &nbsp;
-							<small> #{headerController.currentMonth()} </small> &nbsp;
-							<small> #{headerController.currentYear()} </small>
+							<small> #{headerController.currentDate()} </small>
 						</h:panelGrid>
 					</f:facet>
 
@@ -67,7 +66,7 @@
 							<p:commandButton value="To Buy" 
 											icon="ui-icon-disk"
 											styleClass="autoWidth"
-											immediate="true" />
+											immediate="true"/>
 							<p:commandButton  value="Theme" 
 											id="theme"
 											icon="ui-icon-star" 

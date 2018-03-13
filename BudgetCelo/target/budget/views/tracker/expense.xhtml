@@ -8,7 +8,7 @@
 <ui:composition template="/views/templates/baseTemplate.xhtml">
 
 	<ui:define name="pageHeader">
-		<h2><u>Track Expense of: <small style="font-weight: normal;">#{expenseTrackerController.expense.monthlyBudget.month.toString()}  &nbsp; #{expenseTrackerController.expense.monthlyBudget.year}</small></u></h2>
+		<h2>Track Expense of: <small style="font-weight: normal;">#{expenseTrackerController.expense.monthlyBudget.month.toString()}  &nbsp; #{expenseTrackerController.expense.monthlyBudget.year}</small></h2>
 	</ui:define>
 	
 	<ui:define name="content">
@@ -68,7 +68,7 @@
 									<p:outputLabel value="#{tracker.summary}" />
 								</f:facet>
 								<f:facet name="input">
-									<p:inputText value="#{tracker.summary}" />
+									<p:inputText value="#{tracker.summary}" styleClass="fillWidthOfParent" />
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
@@ -78,7 +78,7 @@
 									<p:outputLabel value="#{tracker.amountFormatted}" />
 								</f:facet>
 								<f:facet name="input">
-									<p:inputText value="#{tracker.amount}" />
+									<p:inputText value="#{tracker.amount}" styleClass="fillWidthOfParent"/>
 								</f:facet>
 							</p:cellEditor>
 						</p:column>

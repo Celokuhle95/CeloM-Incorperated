@@ -27,5 +27,9 @@ public class JsfUtil {
 			addErrorMessage(message);
 		}
 	}
+	
+	public static String redirectable(String url){
+		return url + "?faces-redirect=true";
+	}
 
 }

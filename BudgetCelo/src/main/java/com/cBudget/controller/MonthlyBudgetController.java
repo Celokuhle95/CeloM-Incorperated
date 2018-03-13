@@ -86,7 +86,7 @@ public class MonthlyBudgetController implements Serializable {
 		if (!monthlyBudget.isMoneyGoingOutGreaterThanMoneyComingIn()) {
 			monthlyBudgetService.create(monthlyBudget);
 			JsfUtil.addSuccessMessage("Budget Created for " + monthlyBudget.getMonth() + " " + monthlyBudget.getYear());
-			return "/views/monthlyBudget/list"; // redirect to view page
+			return JsfUtil.redirectable("/views/monthlyBudget/list");
 		} else {
 			JsfUtil.addErrorMessage(
 					"Your Total Spendings cannot be greater than your Total Income, the difference is: R"
@@ -97,7 +97,7 @@ public class MonthlyBudgetController implements Serializable {
 
 	public String edit() {
 		monthlyBudgetService.edit(monthlyBudget);
-		return "/views/monthlyBudget/list";
+		return JsfUtil.redirectable("/views/monthlyBudget/list");
 	}
 
 	public void delete(MonthlyBudget monthlyBudget) {
@@ -147,14 +147,14 @@ public class MonthlyBudgetController implements Serializable {
 
 	public String goToAllBudgets() {
 		setShowListBudgetsSensitiveInfo(false);
-		return "/views/monthlyBudget/list";
+		return JsfUtil.redirectable("/views/monthlyBudget/list");
 	}
 
 	public String goToNewBudget() {
 		resetBudget();
 		showAllSensitieInfo();
 		isView = false;
-		return "/views/monthlyBudget/create";
+		return JsfUtil.redirectable("/views/monthlyBudget/create");
 	}
 
 	private void resetBudget() {
@@ -182,7 +182,7 @@ public class MonthlyBudgetController implements Serializable {
 	public String goToView() {
 		hideAllSensitiveInfo();
 		isView = true;
-		return "/views/monthlyBudget/view";
+		return JsfUtil.redirectable("/views/monthlyBudget/view");
 	}
 
 	public SelectItem[] getPossibleYears() {

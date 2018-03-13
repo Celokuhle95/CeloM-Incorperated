@@ -15,6 +15,7 @@ import org.primefaces.model.chart.BarChartModel;
 import org.primefaces.model.chart.ChartSeries;
 
 import com.cBudget.controller.utils.ColorUtil;
+import com.cBudget.controller.utils.JsfUtil;
 import com.cBudget.entity.ExpenseItem;
 import com.cBudget.entity.ExpenseTracker;
 import com.cBudget.service.ExpenseService;
@@ -36,7 +37,7 @@ public class ExpenseTrackerController implements Serializable {
 
 	public String save() {
 		service.update(expense);
-		return "/views/monthlyBudget/list";
+		return JsfUtil.redirectable("/views/monthlyBudget/view");
 	}
 
 	public void addTracker() {
@@ -87,7 +88,7 @@ public class ExpenseTrackerController implements Serializable {
 		if (expense.getTrackers() == null) {
 			expense.setTrackers(new ArrayList<>());
 		}
-		return "/views/tracker/expense";
+		return JsfUtil.redirectable("/views/tracker/expense");
 	}
 
 	public void reset() {
