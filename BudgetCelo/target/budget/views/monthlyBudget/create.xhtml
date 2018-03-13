@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<ui:composition template="/views/templates/budgetCreateEditTemplate.xhtml">
+	<ui:define name="pageHeader">
+		<h2><u>Create Budget</u></h2>
+	</ui:define>
+	<ui:define name="submission">
+		<h:form id="submitMonthlyBudgetCreationForm">
+			<div class="centered">
+				<p:commandButton value="Save"
+					action="#{monthlyBudgetController.create()}" 
+					update=":monthlyBudgetForm:message">
+				</p:commandButton>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<ui:composition>
+	<h:form id="monthlyBudgetForm">
+		<p:growl id="message" autoUpdate="true" />
+		<p:panel toggleable="true" styleClass="sectionPanel">
+			<f:facet name="header">
+				<span class="panelHeader">Budget Info</span>
+			</f:facet>
+
+			<div id="budgetInfo">
+			
+				<p:panel styleClass="sectionPanel infoPanel">
+					<f:facet name="header">
+						<span>For:</span>
+					</f:facet>
+					<h:panelGrid columns="2" class="ui-fluid">
+						<p:outputLabel value="Year" for="year" />
+						<p:selectOneMenu
+							value="#{monthlyBudgetController.monthlyBudget.year}" id="year"
+							required="true" requiredMessage="Year is required"
+							styleClass="seperateBudgetInfo">
+							<p:ajax
+								update=":listExpensesForm :listInvestmentsForm :FifthyThirthy20RuleForm" />
+							<f:selectItem itemLabel="select" noSelectionOption="true">
+							</f:selectItem>
+							<f:selectItems value="#{monthlyBudgetController.possibleYears}" />
+						</p:selectOneMenu>
+
+						<p:outputLabel value="Month" for="month" />
+						<p:selectOneMenu id="month"
+							value="#{monthlyBudgetController.monthlyBudget.month}"
+							required="true" requiredMessage="Month is required"
+							styleClass="seperateBudgetInfo">
+							<p:ajax
+								update=":listExpensesForm :listInvestmentsForm :FifthyThirthy20RuleForm" />
+							<f:selectItem itemLabel="select" noSelectionOption="true">
+							</f:selectItem>
+							<f:selectItems value="#{monthlyBudgetController.possibleMonths}" />
+						</p:selectOneMenu>
+
+					</h:panelGrid>
+				</p:panel>
+			
+				<p:panel toggleable="true" styleClass="sectionPanel infoPanel" collapsed="#{monthlyBudgetController.showBudgetInfo}">
+					<f:facet name="header">
+						<span>Amounts:</span>
+					</f:facet>
+					<h:panelGrid columns="2" class="ui-fluid">
+						<p:outputLabel value="Income" for="income" />
+						<p:inputText id="income"
+							value="#{monthlyBudgetController.monthlyBudget.income}"
+							required="true" requiredMessage="Income is required"
+							styleClass="seperateBudgetInfo">
+							<p:ajax
+								update=":monthlyBudgetForm :listExpensesForm :listInvestmentsForm :FifthyThirthy20RuleForm" />
+						</p:inputText>
+
+						<p:outputLabel value="Extra Income" for="extraIncome" />
+						<p:inputText id="extraIncome"
+							value="#{monthlyBudgetController.monthlyBudget.extraIncome}"
+							styleClass="seperateBudgetInfo">
+							<p:ajax
+								update=":monthlyBudgetForm :listExpensesForm :listInvestmentsForm :FifthyThirthy20RuleForm" />
+						</p:inputText>
+
+						<p:outputLabel value="Remaining" id="remainingLabel" />
+						<p:inputText id="remainingBalance" readonly="true"
+							style="font-weight: bold; color: #{budgetRuleController.textColor(budgetRuleController.rules.get(2))}"
+							value="R#{monthlyBudgetController.monthlyBudget.totalMoneyLeftFormated}"
+							styleClass="seperateBudgetInfo"
+							title="#{budgetRuleController.rules.get(2).description} (R#{budgetRuleController.limitPercentageAmount(budgetRuleController.rules.get(2))})" />
+					</h:panelGrid>
+
+				</p:panel>
+				
+			</div>
+		</p:panel>
+	</h:form>
+</ui:composition>
+</html>
+
+
+

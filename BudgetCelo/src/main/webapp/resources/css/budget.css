@@ -1,0 +1,105 @@
+.pageContainer {
+	margin-left: 4%;
+	margin-right: 4%;
+}
+
+.centralDialog {
+	position: absolute;
+	margin: auto;
+}
+
+.centered {
+	text-align: center;
+}
+
+.hiddenCol {
+	border-bottom: none !important;
+	border-left: none !important;
+	background: none !important;
+}
+
+.summaryCol {
+	text-align: left !important;
+	font-weight: bolder !important;
+}
+
+.optionCol {
+	width: 5em !important;
+}
+
+.thinCol{
+	width: 6%;
+}
+
+.bold {
+	font-weight: bold;
+}
+
+.autoWidth {
+	width: auto !important;
+}
+
+.panelHeader {
+	font-weight: bold;
+	font-size: 20px;
+}
+
+.sectionPanel {
+	border: none !important;
+}
+
+.seperateGridElements {
+	margin-left: 20px;
+}
+
+.seperateBudgetInfo {
+	margin-left: 1em;
+}
+
+.fillWidthOfParent {
+	width: -webkit-fill-available;
+}
+
+.tableEditInput {
+	border-radius: 7px;
+	margin: 5px;
+}
+
+.forecastOverlay {
+	max-height: 50%;
+	overflow-y: scroll;
+}
+
+.noPadding {
+	padding: 0px !important;
+}
+
+.infoPanel {
+	width: 20%;
+}
+
+.completed {
+	background: #666964;
+	color: white;
+}
+
+.halfWidth {
+	width: 50%;
+	margin: 5px;
+}
+
+.blankBackground {
+	background: none;
+	border: none;
+}
+
+<!-- -->
+.smallerTableWidth {
+	width: 15%;
+}
+
+
+<!-- -->
+.trackerTable {
+	margin-right: 15%;
+}

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="/views/templates/baseTemplate.xhtml">
+	<ui:define name="content">
+		<div id="budgetInfo">
+			<ui:insert name="budgetInformation">
+				<ui:decorate template="/views/monthlyBudget/info.xhtml"/>
+			</ui:insert>
+		</div>
+		
+		<br />
+		<br />
+		
+		<div id="expenses">
+			<ui:insert name="expenseList">
+				<ui:decorate template="/views/expense/list.xhtml" />
+			</ui:insert>
+		</div>
+		
+		<br />
+		<br />
+		
+		<div id="investments">
+			<ui:insert name="investmentList">
+				<ui:decorate template="/views/investment/list.xhtml" />
+			</ui:insert>
+		</div>
+		
+		<div id="50_30_20Rule">
+			<ui:insert name="50_30_20Rule">
+				<ui:decorate template="/views/50_30_20Rule/view.xhtml"/>
+			</ui:insert>
+		</div>
+		
+		<br/>
+		<br/>
+		
+		<div id="submission">
+			<ui:insert name="submission">
+			</ui:insert>
+		</div>
+
+		<div id="createExpense" class="centralDialogDiv">
+			<ui:insert name="createExpense">
+				<ui:decorate template="/views/expense/create.xhtml" />
+			</ui:insert>
+		</div>
+
+		<div id="createInvestment">
+			<ui:insert name="createInvestment">
+				<ui:decorate template="/views/investment/create.xhtml" />
+			</ui:insert>
+		</div>
+		
+	</ui:define>
+</ui:composition>
+</html>

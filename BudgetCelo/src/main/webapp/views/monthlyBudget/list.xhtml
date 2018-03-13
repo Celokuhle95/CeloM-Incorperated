@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>List Monthly Budgets By Year</title>
+</h:head>
+<h:body>
+	<ui:composition template="/views/templates/baseTemplate.xhtml">
+		<ui:define name="pageHeader">
+			<h2><u>Budgets</u></h2>
+		</ui:define>
+
+		<ui:define name="content">
+			<h:form id="listMonthlyBudgetForm">
+				<div>
+					<p:selectBooleanButton offLabel="Show" onLabel="Hide"
+						onIcon="ui-icon-close" offIcon="ui-icon-check" title="Amounts">
+						<p:ajax listener="#{monthlyBudgetController.toggleShowListBudgetsSensitiveInfo()}" 
+								update=":listMonthlyBudgetForm"/>	
+					</p:selectBooleanButton>
+				</div>
+				<br/>
+				<div id="allMonths">
+					<ui:repeat value="#{monthlyBudgetController.allBudgets}"
+							   var="budgets">
+						<p:panel header="#{budgets.get(0).year}" toggleable="true"
+							styleClass="sectionPanel">
+							<p:dataTable value="#{budgets}" var="monthlyBudget">
+								<p:column headerText="Month" styleClass="centered">
+									<p:outputLabel value="#{monthlyBudget.month.toString()}" styleClass="centered"/>
+								</p:column>
+								<p:column headerText="Total Income (R)" styleClass="centered">
+									<p:outputLabel value="#{monthlyBudget.totalIncomeFormated}" rendered="#{monthlyBudgetController.getShowListBudgetsSensitiveInfo()}"/>
+									<p:outputLabel value="#{monthlyBudgetController.disguiser()}" rendered="#{monthlyBudgetController.getShowListBudgetsSensitiveInfo() eq false}"/>
+								</p:column>
+								<p:column headerText="Expenses (R)" styleClass="centered">
+									<p:outputLabel value="#{monthlyBudget.totalExpensesFormated}" rendered="#{monthlyBudgetController.getShowListBudgetsSensitiveInfo()}"/>
+									<p:outputLabel value="#{monthlyBudgetController.disguiser()}" rendered="#{monthlyBudgetController.getShowListBudgetsSensitiveInfo() eq false}"/>
+								</p:column>
+								<p:column headerText="Investments (R)" styleClass="centered">
+									<p:outputLabel
+										rendered="#{monthlyBudgetController.getShowListBudgetsSensitiveInfo()}"
+										value="#{monthlyBudget.totalInvestmentsFormated}" />
+									<p:outputLabel value="#{monthlyBudgetController.disguiser()}" rendered="#{monthlyBudgetController.getShowListBudgetsSensitiveInfo() eq false}"/>
+								</p:column>
+								<p:column headerText="Remaining	" styleClass="centered">
+									<p:outputLabel value="#{monthlyBudget.totalMoneyLeftFormated}" rendered="#{monthlyBudgetController.getShowListBudgetsSensitiveInfo()}"/>
+									<p:outputLabel value="#{monthlyBudgetController.disguiser()}"  rendered="#{monthlyBudgetController.getShowListBudgetsSensitiveInfo() eq false}"/>
+								</p:column>
+								<p:column headerText="Details" styleClass="optionCol centered">
+									<p:commandButton value="View" action="#{monthlyBudgetController.goToView()}">
+										<f:setPropertyActionListener value="#{monthlyBudget}" 
+																	target="#{monthlyBudgetController.monthlyBudget}"/>
+										<f:setPropertyActionListener value="#{monthlyBudget}" 
+																	target="#{budgetRuleController.monthlyBudget}"/>
+																
+									 </p:commandButton>
+								</p:column>
+							</p:dataTable>
+						</p:panel>
+						<br/>
+						<br/>
+					</ui:repeat>
+				</div>
+			</h:form>
+		</ui:define>
+
+	</ui:composition>
+</h:body>
+</html>

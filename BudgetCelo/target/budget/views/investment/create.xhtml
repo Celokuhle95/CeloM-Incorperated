@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+	<ui:composition>
+		<p:dialog id="createInvestmentDialog" 
+			 widgetVar="createInvestmentDialog" 
+			 header="Create Investment"
+			 closeOnEscape="true" 
+			 closable="true" 
+		     modal="true"
+			 styleClass="centralDialog" 
+			 resizable="false" 
+			 responsive="true"
+			 showEffect="puff">
+			 
+			<p:ajax event="close" listener="#{monthlyBudgetController.resetInvestment()}"/>
+			<h:form id="createInvestmentForm">
+				<p:growl id="expenseMessages" autoUpdate="true" />
+				
+				<p:panelGrid columns="2">
+	
+					<p:outputLabel value="Name" for="name" />
+					<p:inputText id="name"
+						value="#{monthlyBudgetController.investment.name}" required="true"
+						requiredMessage="Investment Name is required" />
+	
+					<p:outputLabel value="Amount" for="amount" />
+					<p:inputText id="amount"
+						value="#{monthlyBudgetController.investment.amount}" required="true"
+						requiredMessage="Amount is required" />
+	
+					<p:outputLabel value="Type" for="type" />
+					<p:selectOneMenu id="type" styleClass="fillWidthOfParent"
+						value="#{monthlyBudgetController.investment.investmentType}"
+						required="true" requiredMessage="Investment Type is required">
+						<f:selectItem itemLabel="select" noSelectionOption="true" />
+						<f:selectItems value="#{investmentController.types}" />
+					</p:selectOneMenu>
+	
+					<p:outputLabel value="Risk" for="riskLevel" />
+					<p:selectOneMenu id="riskLevel" styleClass="fillWidthOfParent"
+						value="#{monthlyBudgetController.investment.riskLevel}"
+						required="true" requiredMessage="Investment Risk is required">
+						<f:selectItem itemLabel="select" noSelectionOption="true" />
+						<f:selectItems value="#{investmentController.riskLevels}" />
+					</p:selectOneMenu>
+	
+					<p:outputLabel value="Interest Rate" for="interestRate" />
+					<p:inputText id="interestRate"
+						value="#{monthlyBudgetController.investment.interestRate}" />
+	
+					<p:outputLabel value="Period (in Months)" for="period" />
+					<p:inputText id="period"
+						value="#{monthlyBudgetController.investment.period}" />
+	
+					<p:outputLabel value="Recurring" for="recurring" />
+					<p:selectBooleanCheckbox id="recurring"
+						value="#{monthlyBudgetController.investment.recurring}" />
+				</p:panelGrid>
+
+				<br />
+
+				<div class="centered">
+					<p:commandButton value="Save"
+									 id="save" 
+									 update=":listInvestmentsForm :monthlyBudgetForm :FifthyThirthy20RuleForm"
+									 action="#{monthlyBudgetController.addInvestment()}" 
+									 ajax="true" />
+				</div>
+			</h:form>
+		</p:dialog>
+		
+	</ui:composition>
+</html>

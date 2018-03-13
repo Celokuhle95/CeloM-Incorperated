@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<ui:composition>
+
+	<p:dialog id="createExpenseDialog" 
+		widgetVar="createExpenseDialog"
+		header="Create Expense"
+		closeOnEscape="true"
+		closable="true"
+		modal="true"
+		resizable="false"
+		responsive="true"
+		styleClass="centralDialog" 
+		showEffect="puff">
+		<p:ajax event="close" listener="#{monthlyBudgetController.resetExpense()}"/>
+		
+		<h:form id="createExpenseForm">
+		
+			<p:growl id="expenseMessages"/>
+
+			<p:panelGrid columns="2" >
+
+				<p:outputLabel value="Name" for="name" />
+				<p:inputText id="name"
+					value="#{monthlyBudgetController.expense.name}" required="true"
+					requiredMessage="Expense Name is required" />
+
+				<p:outputLabel value="Amount" for="amount" />
+				<p:inputMask id="amount"
+					value="#{monthlyBudgetController.expense.amount}" required="true"
+					requiredMessage="Amount is required">
+				</p:inputMask>
+
+				<p:outputLabel value="Type" for="type" />
+				<p:selectOneMenu id="type" styleClass="fillWidthOfParent"
+					value="#{monthlyBudgetController.expense.expenseType}"
+					required="true" requiredMessage="Expense Type is required">
+					<f:selectItem itemLabel="select" noSelectionOption="true" />
+					<f:selectItems value="#{expenseController.types}" var="typesVar" />
+				</p:selectOneMenu>
+
+				<p:outputLabel value="Necessity" for="necessity" />
+				<p:selectOneMenu id="necessity" styleClass="fillWidthOfParent"
+					value="#{monthlyBudgetController.expense.necessityLevel}"
+					required="true" requiredMessage="Expense Necessity is required">
+					<f:selectItem itemLabel="select" noSelectionOption="true" />
+					<f:selectItems value="#{expenseController.necessityLevels}" />
+				</p:selectOneMenu>
+
+				<p:outputLabel value="Recurring" for="recurring" />
+				<p:selectBooleanCheckbox id="recurring"
+					value="#{monthlyBudgetController.expense.recurring}" />
+
+			</p:panelGrid>
+
+			<br />
+
+			<div class="centered">
+				<p:commandButton value="Save" id="save"
+					update="listExpensesForm :monthlyBudgetForm :FifthyThirthy20RuleForm"
+					action="#{monthlyBudgetController.addExpense()}"
+					ajax="true">
+				</p:commandButton>
+			</div>
+		</h:form>
+	</p:dialog>
+
+</ui:composition>
+</html>

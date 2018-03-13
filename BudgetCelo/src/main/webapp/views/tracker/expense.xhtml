@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<ui:composition template="/views/templates/baseTemplate.xhtml">
+
+	<ui:define name="pageHeader">
+		<h2><u>Track Expense of: <small style="font-weight: normal;">#{expenseTrackerController.expense.monthlyBudget.month.toString()}  &nbsp; #{expenseTrackerController.expense.monthlyBudget.year}</small></u></h2>
+	</ui:define>
+	
+	<ui:define name="content">
+	<h:form id="expenseTrackerForm">
+		<p:panel styleClass="sectionPanel blankBackground" toggleable="true">
+			<p:panelGrid columns="2" >
+				<p:outputLabel value="Expense Name"/>
+				<p:outputLabel value="#{expenseTrackerController.expense.name}"/>
+				
+				<p:outputLabel value="Type" />
+				<p:outputLabel value="#{expenseTrackerController.expense.expenseType.toString()}"/>
+				
+				<p:outputLabel value="Allocated Amount" />
+				<p:outputLabel value="R#{expenseTrackerController.expense.amount}" styleClass="bold"/>
+			</p:panelGrid>
+		</p:panel>
+		
+		<script>
+			function ext() {
+	    		this.cfg.seriesDefaults.rendererOptions = {
+	        	barWidth : 90
+    			};
+			}
+		</script>		
+		
+		<div id="trackerInfo">
+			
+			<h:panelGrid columns="2" columnClasses="halfWidth">
+				<p:panel id="list" styleClass="blankBackground">
+					<h:panelGrid columns="2">
+						<p:commandButton value="New"
+									onclick="PF('expenseTrackerDialog').show();"/>
+								
+						<p:panelGrid id="totalTracersAmount" columns="2" styleClass="seperateGridElements">
+							<p:outputLabel value="&nbsp;&nbsp; Total: &nbsp;&nbsp; "
+											styleClass="summaryCol" />
+							<p:outputLabel id="total"
+											value="R#{expenseTrackerController.expense.totalTrackedFormatted}"
+											styleClass="summaryCol"
+											style="color: #{expenseTrackerController.trackedTotalColor}"/>
+						</p:panelGrid>
+				
+					</h:panelGrid>
+					
+					<br/>
+					
+					<p:dataTable var="tracker" 
+								id="trackers"
+								value="#{expenseTrackerController.expense.trackers}"
+								editable="true" >
+								
+						<p:ajax event="rowEdit" update=":expenseTrackerForm:totalTracersAmount :expenseTrackerForm:ruleChart"/>
+			
+						<p:column headerText="Summary" sortBy="#{tracker.summary}" styleClass="centered">
+							<p:cellEditor>
+								<f:facet name="output">
+									<p:outputLabel value="#{tracker.summary}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:inputText value="#{tracker.summary}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+						<p:column headerText="Amount (R)" sortBy="#{tracker.amount}" styleClass="centered">
+							<p:cellEditor>
+								<f:facet name="output">
+									<p:outputLabel value="#{tracker.amountFormatted}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:inputText value="#{tracker.amount}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+						<p:column headerText="Date" sortBy="#{tracker.date}"
+							styleClass="centered">
+							<p:outputLabel value="#{tracker.dateFormatted}" />
+						</p:column>
+						<p:column headerText="Time" sortBy="#{tracker.time}"
+							styleClass="centered">
+							<p:outputLabel value="#{tracker.timeFormatted}" />
+						</p:column>
+						<p:column headerText="Edit" styleClass="centered">
+							<p:rowEditor editTitle="Edit"/>
+						</p:column>
+						<p:column headerText="Remove" styleClass="centered">
+							<p:commandButton icon="ui-icon-trash" 
+											update=":expenseTrackerForm"
+											title="Remove"
+											ajax="true">
+								<p:confirm header="Confirmation" message="Are you sure you?"
+									icon="ui-icon-alert" />
+								<p:collector unique="false" value="#{tracker}" 
+									removeFrom="#{expenseTrackerController.expense.trackers}" />
+							</p:commandButton>
+						</p:column>
+		
+					</p:dataTable>
+				</p:panel>
+
+				<p:panel id="report" styleClass="blankBackground">
+					<div id="ruleReport">
+						<p:chart type="bar"
+								id="ruleChart"
+								model="#{expenseTrackerController.barChart}"
+							 	responsive="true" />
+					</div>
+				</p:panel>
+			</h:panelGrid>
+
+		</div>
+		
+		<br/>
+		
+		<div class="centered"> 
+			<p:commandButton value="Update"
+							action="#{expenseTrackerController.save()}"
+							ajax="true"
+							/>		
+		</div>
+	</h:form>
+		
+	<h:form id="expenseTrackerDialogForm">
+		<p:growl id="expenseTrackerDialogGrowl" autoUpdate="true"/>
+		<p:dialog id="expenseTrackerDialog"
+				 width="20%"
+				 widgetVar="expenseTrackerDialog" 
+				 closeOnEscape="true"
+				 closable="true"
+				 modal="true"
+				 showEffect="puff"
+				 styleClass="centralDialog" 
+				 header="New Expense Tracker Item"
+				 responsive="true"
+				 resizable="false"
+				 >
+
+			<div class="centered">
+				<h:panelGrid columns="2" id="trackerInfo" > 
+					
+					<p:outputLabel for="summary" value="Summary"/>
+					<p:inputText value="#{expenseTrackerController.tracker.summary}" id="summary"
+								styleClass="seperateGridElements" required="true"/>
+					
+					<p:outputLabel for="amount" value="Amount"/>
+					<p:inputText value="#{expenseTrackerController.tracker.amount}" id="amount"
+								styleClass="seperateGridElements" required="true"/>
+					
+				</h:panelGrid>
+				
+				<br/>
+				
+					<p:commandButton value="Add" 
+									update=":expenseTrackerForm"
+									ajax="true"
+									action="#{expenseTrackerController.addTracker()}"
+									/>
+			</div>
+		</p:dialog>		
+	</h:form>
+	</ui:define>
+</ui:composition>
+</html>

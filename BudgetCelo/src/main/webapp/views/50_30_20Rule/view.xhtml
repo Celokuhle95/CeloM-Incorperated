@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<ui:composition >
+	<br/>
+	<br/>
+	<h:form id="FifthyThirthy20RuleForm">
+		<p:panel header="Budget Rule Summary"
+				 styleClass="sectionPanel"
+				 toggleable="true"
+				 rendered="#{monthlyBudgetController.isMonthlyBudgetValid()}"
+				 >
+			<f:facet name="header">
+				<span class="panelHeader"> Budget Rule Summary </span>
+			</f:facet>
+			<div>
+				<p:selectBooleanButton offLabel="Show" onLabel="Hide"
+					rendered="#{monthlyBudgetController.isView()}"
+					onIcon="ui-icon-close" offIcon="ui-icon-check">
+					<p:ajax
+						listener="#{monthlyBudgetController.toggleShowRuleSensitiveInfo()}"
+						update=":FifthyThirthy20RuleForm" />
+
+				</p:selectBooleanButton>
+			</div>
+			
+			<br/>	 
+				 
+			<p:dataTable value="#{budgetRuleController.rules}" var="rule" > 
+				<p:columnGroup type="header">
+					<p:row>
+						<p:column headerText="%" rowspan="2" styleClass="thinCol"/>
+						<p:column headerText="Based on Explanation"  colspan="3"/>
+						<p:column headerText="Explanation" rowspan="2" />
+					</p:row>
+					<p:row>
+						<p:column headerText="Limit (R)"/>
+						<p:column headerText="Actual (R)"/>
+						<p:column headerText="Difference (%)" styleClass="optionCol"/>
+					</p:row>
+				</p:columnGroup>
+				
+				<p:column styleClass="centered">
+					<p:outputLabel value="#{rule.valueFormated}" />
+				</p:column>
+				<p:column styleClass="centered">
+					<p:outputLabel value="#{budgetRuleController.limitPercentageAmountFormated(rule)}" rendered="#{monthlyBudgetController.showRuleSensitiveInfo}"/>
+					<p:outputLabel value="#{monthlyBudgetController.disguiser()}" rendered="#{monthlyBudgetController.showRuleSensitiveInfo eq false}"/>
+				</p:column>
+				<p:column styleClass="centered">
+					<p:outputLabel 
+						value="#{budgetRuleController.respectiveSpendingAmountFormated(rule)}" 
+						rendered="#{monthlyBudgetController.showRuleSensitiveInfo}"
+						/>
+					<p:outputLabel value="#{monthlyBudgetController.disguiser()}" rendered="#{monthlyBudgetController.showRuleSensitiveInfo eq false}"/>
+				</p:column>
+				<p:column styleClass="centered">
+					<p:outputLabel style="color: #{budgetRuleController.textColor(rule)}"
+						value="#{budgetRuleController.differencePercentageFormated(rule)}"/>
+				</p:column>
+				<p:column styleClass="centered">
+					<p:commandButton value="View" id="description"
+						styleClass="autoWidth" title="For #{rule.summary}"/>
+					<p:overlayPanel for="description">
+						<p:outputLabel value="#{rule.description}" />
+					</p:overlayPanel>
+				</p:column>
+			</p:dataTable>
+			
+			<br/>
+			<br/>
+			
+			<script >
+				function ext() {
+				    this.cfg.seriesDefaults.rendererOptions = {
+				        barWidth : 90
+				    };
+				}
+			</script>
+			
+			<div>
+				<p:commandButton value="Refesh"
+								 icon="ui-icon-refresh"
+								 update=":FifthyThirthy20RuleForm"
+								 ajax="true"
+								 rendered="#{monthlyBudgetController.showRuleSensitiveInfo}">
+					<f:setPropertyActionListener value="#{monthlyBudgetController.monthlyBudget}"
+									target="#{budgetRuleController.monthlyBudget}"/>
+			 	</p:commandButton>
+			</div>
+			
+			<div id="ruleReport">
+				<p:chart type="bar" rendered="#{monthlyBudgetController.showRuleSensitiveInfo}"
+						 model="#{budgetRuleController.barChart}" 
+						 responsive="true" 
+						 />
+			</div>
+			
+		</p:panel>
+	</h:form>
+</ui:composition>
+</html>

@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<ui:composition>
+	<h:form id="listExpensesForm">
+		<p:panel styleClass="sectionPanel" toggleable="true" rendered="#{monthlyBudgetController.isMonthlyBudgetValid()}">
+			<f:facet name="header">
+				<span class="panelHeader"> Expenses </span>
+			</f:facet>
+
+			<div id="actions">
+				<div style="float: left;">
+					<h:panelGrid columns="3">
+						<p:commandButton value="New"
+							onclick="PF('createExpenseDialog').show();" />
+
+						<p:panelGrid id="totalExpenses" columns="2"
+							styleClass="seperateGridElements">
+							<p:outputLabel value="&nbsp;&nbsp; Total: &nbsp;&nbsp; "
+								styleClass="summaryCol" />
+							<p:outputLabel id="total" style="color: #{budgetRuleController.textColor(budgetRuleController.rules.get(0))}"
+								value="R#{monthlyBudgetController.monthlyBudget.totalExpensesFormated}"
+								styleClass="summaryCol" 
+								title="#{budgetRuleController.rules.get(0).description} (R#{budgetRuleController.limitPercentageAmount(budgetRuleController.rules.get(0))})"
+								rendered="#{monthlyBudgetController.showExpenseSensitiveInfo}"/>
+							<h:outputText value="#{monthlyBudgetController.disguiser()}" 
+										rendered="#{monthlyBudgetController.showExpenseSensitiveInfo eq false}"
+										style="color: #{budgetRuleController.textColor(budgetRuleController.rules.get(0))}" />
+						</p:panelGrid>
+						
+						<p:commandButton value="Forecast" id="forecast" 
+									styleClass="seperateGridElements"
+									rendered="#{monthlyBudgetController.isView()}"/>
+						<p:overlayPanel for="forecast" styleClass="forecastOverlay" rendered="#{monthlyBudgetController.isView()}">
+							<p:panel header="Accounts" styleClass="sectionPanel">
+								<h:panelGrid columns="1">
+<!-- 									<ui:repeat var="" value=""> -->
+<!-- 										<p:commandLink value="view"/> -->
+<!-- 									</ui:repeat> -->
+<!-- 									<p:link value="One"></p:link> -->
+<!-- 									<p:link value="Fortenn "></p:link> -->
+<!-- 									<p:link value="Sizwer trela"></p:link> -->
+<!-- 									<p:link value="Sizwer trela"></p:link> -->
+<!-- 									<p:link value="Sizwer trela"></p:link> -->
+								</h:panelGrid>
+							</p:panel>
+							<p:panel header="Loans" styleClass="sectionPanel">
+							</p:panel>
+							<p:panel header="Other Recurring" styleClass="sectionPanel">
+							</p:panel>
+						</p:overlayPanel>
+					</h:panelGrid>
+				</div>
+				<div style="float: right;">
+					<h:panelGrid columns="2">
+						<h:outputLabel value="Amounts: &nbsp;" rendered="#{monthlyBudgetController.isView()}"/>
+						<p:selectBooleanButton offLabel="Show" onLabel="Hide" rendered="#{monthlyBudgetController.isView()}"
+							onIcon="ui-icon-close" offIcon="ui-icon-check">
+							<p:ajax listener="#{monthlyBudgetController.toggleShowExpenseSensitiveInfo()}" 
+									update=":listExpensesForm"
+							/>
+						</p:selectBooleanButton>
+					</h:panelGrid>
+				</div>
+			</div>
+			<br />
+			<br />
+			<div id="listExpenses">
+				<p:dataTable rendered="#{monthlyBudgetController.monthlyBudget.expenses.size() ne 0}"
+					value="#{monthlyBudgetController.monthlyBudget.expenses}"
+					var="expense" editable="true" 
+					rowStyleClass="#{expense.completed ? 'completed' : null}">
+					<p:ajax event="rowEdit"
+					listener="#{monthlyBudgetController.sayHi(expense)}"
+					 update=":listExpensesForm:totalExpenses :monthlyBudgetForm :FifthyThirthy20RuleForm"/>
+
+					<p:column headerText="Name" styleClass="centered" sortBy="#{expense.name}">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{expense.name}" rendered="#{monthlyBudgetController.showExpenseSensitiveInfo}"/>
+								<h:outputText value="#{monthlyBudgetController.disguiser()}" rendered="#{monthlyBudgetController.showExpenseSensitiveInfo eq false}"/>
+							</f:facet>
+							<f:facet name="input">
+								<h:inputText value="#{expense.name}" styleClass="fillWidthOfParent tableEditInput"/>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					<p:column headerText="Amount (R)" styleClass="centered" sortBy="#{expense.amount}">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{expense.amountFormated}" rendered="#{monthlyBudgetController.showExpenseSensitiveInfo}"/>
+								<h:outputText value="#{monthlyBudgetController.disguiser()}" rendered="#{monthlyBudgetController.showExpenseSensitiveInfo eq false}"/>
+							</f:facet>
+							<f:facet name="input">
+								<h:inputText value="#{expense.amount}"
+									styleClass="fillWidthOfParent tableEditInput" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column headerText="Type" styleClass="centered" sortBy="#{expense.expenseType.toString()}">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{expense.expenseType.toString()}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:selectOneMenu id="type" value="#{expense.expenseType}"
+									styleClass="fillWidthOfParent tableEditInput">
+									<f:selectItems value="#{expenseController.types}"
+										var="typesVar" />
+									<p:ajax update="createExpenseForm:save" event="valueChange" />
+								</p:selectOneMenu>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					<p:column headerText="Necessity" styleClass="centered" sortBy="#{expense.necessityLevel.toString()}">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{expense.necessityLevel.toString()}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:selectOneMenu id="necessity" styleClass="fillWidthOfParent tableEditInput"
+									value="#{expense.necessityLevel}" required="true"
+									requiredMessage="Expense Necessity is required">
+									<f:selectItems value="#{expenseController.necessityLevels}" />
+								</p:selectOneMenu>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					<p:column headerText="Recurring" styleClass="centered" sortBy="#{expense.recurring}" >
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="Yes"
+									rendered="#{expense.recurring eq true}" />
+								<h:outputText value="No"
+									rendered="#{expense.recurring eq false}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:selectBooleanCheckbox id="recurring"
+									value="#{expense.recurring}"
+									styleClass="fillWidthOfParent tableEditInput" />
+							</f:facet>
+						</p:cellEditor> 
+					</p:column>
+					<p:column headerText="Completed" styleClass="centered" sortBy="#{expense.completed}">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="Yes"
+									rendered="#{expense.completed eq true}" />
+								<h:outputText value="No"
+									rendered="#{expense.completed eq false}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:selectBooleanCheckbox id="completed"
+									value="#{expense.completed}"
+									styleClass="fillWidthOfParent tableEditInput" />
+							</f:facet>
+						</p:cellEditor> 
+					</p:column>
+					<p:column headerText="Edit" styleClass="optionCol centered">
+						<p:rowEditor editTitle="Edit"/>
+					</p:column>
+					<p:column headerText="Remove" styleClass="optionCol centered">
+						<p:commandButton icon="ui-icon-trash"
+										 update="listExpensesForm :monthlyBudgetForm :FifthyThirthy20RuleForm" 
+										 title="Remove">
+						    <p:confirm header="Confirmation" message="Are you sure you want to remove the Expense?" icon="ui-icon-alert"/>
+							<p:collector unique="false" value="#{expense}" 
+								removeFrom="#{monthlyBudgetController.monthlyBudget.expenses}" />
+						</p:commandButton>
+					</p:column>
+					<p:column headerText="Track" styleClass="optionCol centered">
+						<p:commandButton icon="ui-icon-star"
+										 action="#{expenseTrackerController.initTracker()}"
+										 title="Keep Track of Expense"
+										 actionListener="#{expenseTrackerController.createBarChart}">
+							 <f:setPropertyActionListener value="#{expense}" target="#{expenseTrackerController.expense}"/>
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+			</div>
+		</p:panel>
+	</h:form>
+
+</ui:composition>
+
+</html>

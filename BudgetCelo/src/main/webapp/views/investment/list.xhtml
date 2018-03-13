@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<ui:composition>
+	<h:form id="listInvestmentsForm">
+		<p:panel styleClass="sectionPanel" 
+				 toggleable="true"
+				 rendered="#{monthlyBudgetController.isMonthlyBudgetValid()}"
+				 >
+			<f:facet name="header">
+				<span class="panelHeader"> Investments </span>
+			</f:facet>
+
+			<div id="actions">
+				<div style="float: left;">
+					<h:panelGrid columns="3">
+						<p:commandButton value="New" 
+							onclick="PF('createInvestmentDialog').show();" />
+
+						<p:panelGrid id="totalInvestments" columns="2"
+							styleClass="seperateGridElements">
+							<p:outputLabel value="&nbsp;&nbsp; Total: &nbsp;&nbsp; "
+								styleClass="summaryCol" />
+							<p:outputLabel id="total" style="color: #{budgetRuleController.textColor(budgetRuleController.rules.get(1))}"
+								value="R#{monthlyBudgetController.monthlyBudget.totalInvestmentsFormated}"
+								styleClass="summaryCol"
+								title="#{budgetRuleController.rules.get(1).description} (R#{budgetRuleController.limitPercentageAmount(budgetRuleController.rules.get(1))})"
+								rendered="#{monthlyBudgetController.showInvestementSensitiveInfo}"
+								 />
+							<h:outputText value="#{monthlyBudgetController.disguiser()}" 
+										style="color: #{budgetRuleController.textColor(budgetRuleController.rules.get(1))}"
+										rendered="#{monthlyBudgetController.showInvestementSensitiveInfo eq false}"/>
+
+						</p:panelGrid>
+						<p:commandButton value="Forecast" id="forecast"
+							styleClass="seperateGridElements" rendered="#{monthlyBudgetController.isView()}" />
+						<p:overlayPanel for="forecast" styleClass="forecastOverlay" rendered="#{monthlyBudgetController.isView()}">
+							<p:panel header="Accounts" styleClass="sectionPanel">
+								<h:panelGrid columns="1">
+<!-- 									<ui:repeat var="" value=""> -->
+<!-- 										<p:commandLink value="view"/> -->
+<!-- 									</ui:repeat> -->
+								</h:panelGrid>
+							</p:panel>
+							<p:panel header="Loans" styleClass="sectionPanel">
+							</p:panel>
+							<p:panel header="Other Recurring" styleClass="sectionPanel">
+							</p:panel>
+						</p:overlayPanel>
+					</h:panelGrid>
+				</div>
+				<div style="float: right;">
+					<h:panelGrid columns="2" styleClass="forecastOverlay">
+						<h:outputLabel value="Amounts: &nbsp;" rendered="#{monthlyBudgetController.isView()}"/>
+						<p:selectBooleanButton offLabel="Show" onLabel="Hide" rendered="#{monthlyBudgetController.isView()}"
+							onIcon="ui-icon-close" offIcon="ui-icon-check">
+							<p:ajax
+								listener="#{monthlyBudgetController.toggleShowInvestementSensitiveInfo()}" 
+								update=":listInvestmentsForm"
+								/>
+								
+						</p:selectBooleanButton>
+					</h:panelGrid>
+				</div>
+			</div>
+			<br />
+			<br />
+			<div id="listInvestments">
+				<p:dataTable rendered="#{monthlyBudgetController.monthlyBudget.investments.size() ne 0}"
+					value="#{monthlyBudgetController.monthlyBudget.investments}"
+					var="investment" editable="true"
+					rowStyleClass="#{investment.completed ? 'completed' : null}">
+					
+					<p:ajax event="rowEdit" update=":listInvestmentsForm:totalInvestments :monthlyBudgetForm :FifthyThirthy20RuleForm"/>
+					
+					<p:column headerText="Name" styleClass="centered" sortBy="#{investment.name}">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{investment.name}" rendered="#{monthlyBudgetController.showInvestementSensitiveInfo}"/>
+								<h:outputText value="#{monthlyBudgetController.disguiser()}" rendered="#{monthlyBudgetController.showInvestementSensitiveInfo eq false}"/>
+							</f:facet>
+							<f:facet name="input">
+								<h:inputText value="#{investment.name}" 
+								styleClass="fillWidthOfParent tableEditInput" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					<p:column headerText="Amount (R)" styleClass="centered" sortBy="#{investment.amount}">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{investment.amountFormated}"
+									title="#{investment.amountFormated}" rendered="#{monthlyBudgetController.showInvestementSensitiveInfo}"/>
+								<h:outputText value="#{monthlyBudgetController.disguiser()}" rendered="#{monthlyBudgetController.showInvestementSensitiveInfo eq false}"/>
+							</f:facet>
+							<f:facet name="input">
+								<h:inputText value="#{investment.amount}"
+									title="#{investment.amount}" 
+									styleClass="fillWidthOfParent tableEditInput" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					<p:column headerText="Type" styleClass="centered" sortBy="#{investment.investmentType.toString()}">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{investment.investmentType.toString()}"
+									title="#{investment.investmentType.toString()}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:selectOneMenu id="type" value="#{investment.investmentType}"
+									styleClass="fillWidthOfParent tableEditInput">
+									<f:selectItems value="#{investmentController.types}" />
+								</p:selectOneMenu>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					<p:column headerText="Risk" styleClass="centered" sortBy="#{investment.riskLevel.toString()}">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{investment.riskLevel.toString()}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:selectOneMenu id="riskLevel" styleClass="fillWidthOfParent tableEditInput"
+									value="#{investment.riskLevel}">
+									<f:selectItems value="#{investmentController.riskLevels}" />
+								</p:selectOneMenu>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					<p:column headerText="Interest Rate (%)" styleClass="centered" sortBy="#{investment.interestRate}">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{investment.interestRate}" />
+							</f:facet>
+							<f:facet name="input">
+								<h:inputText value="#{investment.interestRate}" styleClass="fillWidthOfParent tableEditInput"/>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					<p:column headerText="Recurring" styleClass="centered" sortBy="#{investment.recurring}">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="Yes"
+									rendered="#{investment.recurring eq true}" />
+								<h:outputText value="No"
+									rendered="#{investment.recurring eq false}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:selectBooleanCheckbox id="recurring"
+									value="#{investment.recurring}"
+									styleClass="fillWidthOfParent tableEditInput"/>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					<p:column headerText="Completed" styleClass="centered" sortBy="#{investment.completed}">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="Yes"
+									rendered="#{investment.completed eq true}" />
+								<h:outputText value="No"
+									rendered="#{investment.completed eq false}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:selectBooleanCheckbox id="completed"
+									value="#{investment.completed}"
+									styleClass="fillWidthOfParent tableEditInput"/>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					<p:column headerText="Period (Months)" styleClass="optionCol centered" sortBy="#{investment.period}">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{investment.period}" />
+							</f:facet>
+							<f:facet name="input">
+								<h:inputText value="#{investment.period}"
+								 styleClass="fillWidthOfParent tableEditInput"/>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					<p:column headerText="Edit" styleClass="optionCol centered">
+						<p:rowEditor editTitle="Edit"/>
+					</p:column>
+					<p:column headerText="Remove" styleClass="optionCol centered">
+						<p:commandButton icon="ui-icon-trash" 
+										update="listInvestmentsForm :monthlyBudgetForm :FifthyThirthy20RuleForm"
+										title="Remove">
+							<p:confirm header="Confirmation" message="Are you sure you want to remove the Investment?" icon="ui-icon-alert"/>
+							<p:collector unique="false" value="#{investment}"
+								removeFrom="#{monthlyBudgetController.monthlyBudget.investments}" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+			</div>
+		</p:panel>	
+	</h:form>
+
+</ui:composition>
+</html>
