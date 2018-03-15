@@ -5,7 +5,7 @@ import javax.ejb.Local;
 import com.cBudget.entity.ExpenseItem;
 
 @Local
-public interface ExpenseService {
+public interface ExpenseService extends BaseService<ExpenseItem> {
 
 	void update(ExpenseItem expense);
 	

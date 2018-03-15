@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<ui:composition template="/views/templates/baseTemplate.xhtml">
+
+	<ui:define name="pageHeader">
+		<h2>Register</h2>
+	</ui:define>
+	
+	<ui:define name="content">
+	<h:form id="registerForm">
+		<p:panel styleClass="sectionPanel blankBackground">
+			<div class="centered">
+				<h:panelGrid columns="2">
+			
+				<p:outputLabel value="Name" for="name"/>
+				<p:inputText id="name" value="#{userController.user.name}" required="true"/>
+				
+				<p:outputLabel value="Surname" for="surname"/>
+				<p:inputText id="surname" value="#{userController.user.surname}" required="true"/>
+				
+				<p:outputLabel value="ID No." for="idNumber"/>
+				<p:inputMask id="idNumber" 
+							 value="#{userController.user.IDNumber}"
+							 required="true"
+							 mask="999999 9999 999"/>
+				
+				<p:outputLabel value="Date Of Birth" for="dob"/>
+				<p:inputText id="dob" value="#{userController.user.dob}" required="true"/>
+				
+				<p:outputLabel value="Cellphone No." for="cellphone"/>
+				<p:inputMask id="cellphone" 
+							 value="#{userController.user.cellphone}"
+							 mask="999-999-9999"/>
+				
+				<p:outputLabel value="Profile Image" for="profileImage"/>
+				<p:fileUpload id="profileImage" mode="simple" skinSimple="true" />
+				
+				<p:outputLabel value="Income" for="income"/>
+				<p:inputNumber id="income" value="#{userController.user.dob}"/>
+				
+				<p:outputLabel value="Email" for="email"/>
+				<p:inputMask id="email" 
+							 value="#{userController.user.email}" 
+							 required="true"
+							 mask="*@*.*"/>
+				 
+				<p:outputLabel value="Password" for="password"/>
+				<p:password id="password" value="#{userController.user.email}" required="true"/>
+				
+				<p:outputLabel value="Confirm Password" for="cpassword"/>
+				<p:password id="cpassword" value="#{userController.user.email}" required="true"/>
+				 
+			</h:panelGrid>
+			<br/>
+			
+			<p:commandButton value="REGISTER"
+						action="#{userController.register()}"
+						ajax="true"
+						update=":registerForm"
+						/>		
+			</div>
+		</p:panel>
+		
+		
+	</h:form>
+	</ui:define>
+</ui:composition>
+</html>

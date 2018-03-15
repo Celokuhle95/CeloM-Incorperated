@@ -35,7 +35,7 @@ public class MonthlyBudgetServiceImpl implements MonthlyBudgetService {
 
 	@Override
 	public List<MonthlyBudget> findAll() {
-		return monthlyBudgetDAO.findAll("MonthlyBudget");
+		return monthlyBudgetDAO.findAll();
 	}
 
 	@Override

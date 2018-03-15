@@ -93,13 +93,8 @@
 	border: none;
 }
 
-<!-- -->
-.smallerTableWidth {
-	width: 15%;
+.loginRows {
+	margin-bottom: 5px;
 }
 
 
-<!-- -->
-.trackerTable {
-	margin-right: 15%;
-}

@@ -4,9 +4,10 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 /**
  * @author celokuhle.myeza
@@ -39,10 +40,12 @@ public class BaseDAO<T> {
 		return entityManager.find(entityClass, id);
 	}
 
-	@SuppressWarnings("unchecked")
-	public List<T> findAll(String entityName) {
-		Query query = entityManager.createQuery("SELECT e from " + entityName + " e", entityClass);
-		return query.getResultList();
+	public List<T> findAll() {
+		CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+		CriteriaQuery<T> q = cb.createQuery(entityClass);
+		Root<T> entity = q.from(entityClass);
+		q.select(entity);
+		return createTypedQuery(q).getResultList();
 	}
 	
 	protected <E> TypedQuery<E> createTypedQuery(CriteriaQuery<E> q) {

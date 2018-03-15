@@ -6,10 +6,13 @@ C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\entity\en
 C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\entity\enums\ExpenseType.java
 C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\entity\ExpenseTracker.java
 C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\service\UserService.java
+C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\service\BaseService.java
 C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\entity\ExpenseItem.java
 C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\controller\utils\ColorUtil.java
+C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\dao\AuthenticationDAO.java
 C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\controller\utils\DropDownsUtil.java
 C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\service\MonthlyBudgetServiceImpl.java
+C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\service\AuthenticationService.java
 C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\dao\UserDAO.java
 C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\entity\ToBuyItem.java
 C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\dao\MonthlyBudgetDAO.java
@@ -17,6 +20,7 @@ C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\entity\en
 C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\entity\enums\RiskLevel.java
 C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\entity\enums\InvestmentType.java
 C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\service\MonthlyBudgetService.java
+C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\controller\AuthenticationController.java
 C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\controller\utils\JsfUtil.java
 C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\entity\BudgetItem.java
 C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\service\ExpenseService.java
@@ -24,10 +28,12 @@ C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\controlle
 C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\controller\ToBuyController.java
 C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\entity\InvestmentItem.java
 C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\controller\utils\MoneyUtil.java
+C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\service\AuthenticatiServiceImpl.java
 C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\controller\UserController.java
 C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\entity\Tracker.java
 C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\service\UserServiceImpl.java
 C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\dao\BaseDAO.java
+C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\entity\UserAuthentication.java
 C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\service\ExpenseServiceImpl.java
 C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\dao\ExpenseDAO.java
 C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\entity\User.java

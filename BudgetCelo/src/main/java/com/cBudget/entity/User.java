@@ -1,5 +1,6 @@
 package com.cBudget.entity;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
@@ -10,110 +11,151 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "RegisteredUser")
-public class User {
-	
+public class User implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	
+
 	@Column
 	private String name;
-	
+
 	@Column
 	private String surname;
-	
+
 	@Column
 	private String email;
 	
 	@Column
+	private String cellphone;
+
+	@Column
 	private String IDNumber;
-	
+
 	@Column
 	private LocalDate dob;
-	
+
 	@Column
 	private BigDecimal income;
-	
+
 	@Column
 	private String profileImage;
+
+	@Column
+	private boolean admin;
 	
 	@OneToMany
 	private List<MonthlyBudget> budgets;
+	
+	@OneToOne
+	private UserAuthentication authentication;
 
-	protected Integer getId() {
+	public User() {
+		admin = false;
+	}
+
+	public Integer getId() {
 		return id;
 	}
 
-	protected void setId(Integer id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	protected String getName() {
+	public String getName() {
 		return name;
 	}
 
-	protected void setName(String name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 
-	protected String getSurname() {
+	public String getSurname() {
 		return surname;
 	}
 
-	protected void setSurname(String surname) {
+	public void setSurname(String surname) {
 		this.surname = surname;
 	}
 
-	protected String getIDNumber() {
+	public String getIDNumber() {
 		return IDNumber;
 	}
 
-	protected void setIDNumber(String iDNumber) {
+	public void setIDNumber(String iDNumber) {
 		IDNumber = iDNumber;
 	}
 
-	protected LocalDate getDob() {
+	public LocalDate getDob() {
 		return dob;
 	}
 
-	protected void setDob(LocalDate dob) {
+	public void setDob(LocalDate dob) {
 		this.dob = dob;
 	}
-	
-	protected String getEmail() {
+
+	public String getEmail() {
 		return email;
 	}
 
-	protected void setEmail(String email) {
+	public void setEmail(String email) {
 		this.email = email;
 	}
 
-	protected BigDecimal getIncome() {
+	public BigDecimal getIncome() {
 		return income;
 	}
 
-	protected void setIncome(BigDecimal income) {
+	public void setIncome(BigDecimal income) {
 		this.income = income;
 	}
 
-	protected String getProfileImage() {
+	public String getProfileImage() {
 		return profileImage;
 	}
 
-	protected void setProfileImage(String profileImage) {
+	public void setProfileImage(String profileImage) {
 		this.profileImage = profileImage;
 	}
 
-	protected List<MonthlyBudget> getBudgets() {
+	public List<MonthlyBudget> getBudgets() {
 		return budgets;
 	}
 
-	protected void setBudgets(List<MonthlyBudget> budgets) {
+	public void setBudgets(List<MonthlyBudget> budgets) {
 		this.budgets = budgets;
 	}
+
+	public boolean isAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
+	}
+
+	public String getCellphone() {
+		return cellphone;
+	}
+
+	public void setCellphone(String cellphone) {
+		this.cellphone = cellphone;
+	}
+
+	public UserAuthentication getAuthentication() {
+		return authentication;
+	}
+
+	public void setAuthentication(UserAuthentication authentication) {
+		this.authentication = authentication;
+	}
+	
 
 }

@@ -2,6 +2,7 @@ package com.cBudget.dao;
 
 import java.io.Serializable;
 
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -11,6 +12,7 @@ import javax.persistence.criteria.Root;
 import com.cBudget.entity.User;
 
 @Named
+@RequestScoped
 public class UserDAO extends BaseDAO<User> implements Serializable{
 	
 	private static final long serialVersionUID = 1L;

@@ -52,7 +52,7 @@ public class MonthlyBudgetController implements Serializable {
 	public MonthlyBudgetController() {
 	}
 
-	public void sayHi(ExpenseItem exp) {
+	public void sayHi(ExpenseItem exp) { //DELETE
 		System.out.println(exp);
 	}
 
