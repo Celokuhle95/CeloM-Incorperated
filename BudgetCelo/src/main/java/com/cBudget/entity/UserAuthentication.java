@@ -23,9 +23,6 @@ public class UserAuthentication implements Serializable {
 	@Column
 	private String password;
 	
-//	@OneToOne
-//	private User user;
-
 	public Integer getId() {
 		return id;
 	}
@@ -49,13 +46,5 @@ public class UserAuthentication implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-//	public User getUser() {
-//		return user;
-//	}
-//
-//	public void setUser(User user) {
-//		this.user = user;
-//	}
 	
 }

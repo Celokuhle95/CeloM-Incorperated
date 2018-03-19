@@ -52,10 +52,6 @@ public class MonthlyBudgetController implements Serializable {
 	public MonthlyBudgetController() {
 	}
 
-	public void sayHi(ExpenseItem exp) { //DELETE
-		System.out.println(exp);
-	}
-
 	public List<List<MonthlyBudget>> getAllBudgets() {
 		List<List<MonthlyBudget>> budgets = new ArrayList<>();
 		List<Integer> budgetingYears = monthlyBudgetService.getBudgetingYears();
@@ -116,23 +112,10 @@ public class MonthlyBudgetController implements Serializable {
 	}
 
 	public boolean isMonthlyBudgetValid() {
-		int duplications = 0;
 		if (monthlyBudget.getYear() == null || monthlyBudget.getMonth() == null || monthlyBudget.getIncome() == null) {
-			preventDeplicateShowingOfMessage(duplications);
 			return false;
 		}
 		return true;
-	}
-
-	private void preventDeplicateShowingOfMessage(Integer duplications) {
-		if (++duplications == 1) {
-			JsfUtil.addInfoMessage("Provide all Required Information before continuing");
-		} else {
-			if (duplications == 3) { // 3 = number of possible calls that could provide the same message in a single
-										// front end call/update
-				duplications = 0;
-			}
-		}
 	}
 
 	public void resetExpense() {
@@ -152,7 +135,7 @@ public class MonthlyBudgetController implements Serializable {
 
 	public String goToNewBudget() {
 		resetBudget();
-		showAllSensitieInfo();
+		showAllSensitiveInfo();
 		isView = false;
 		return JsfUtil.redirectable("/views/monthlyBudget/create");
 	}
@@ -161,7 +144,7 @@ public class MonthlyBudgetController implements Serializable {
 		monthlyBudget = new MonthlyBudget();
 	}
 
-	private void showAllSensitieInfo() {
+	private void showAllSensitiveInfo() {
 		showExpenseSensitiveInfo = true;
 		showInvestementSensitiveInfo = true;
 		showRuleSensitiveInfo = true;

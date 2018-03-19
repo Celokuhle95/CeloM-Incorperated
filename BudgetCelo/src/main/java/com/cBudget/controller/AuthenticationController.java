@@ -3,12 +3,15 @@ package com.cBudget.controller;
 import java.io.Serializable;
 
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.cBudget.controller.utils.JsfUtil;
+import com.cBudget.controller.utils.PasswordsUtil;
 import com.cBudget.entity.UserAuthentication;
 import com.cBudget.service.AuthenticationService;
 
@@ -21,18 +24,25 @@ public class AuthenticationController implements Serializable{
 	@Inject
 	private AuthenticationService authService;
 	
-	private UserAuthentication authentication;
+	private UserAuthentication authentication = new UserAuthentication();
 	
 	private boolean loggedIn;
 	
 	public String login() {
+		String hashedPassword = PasswordsUtil.generateHash(authentication.getPassword());
+		authentication.setPassword(hashedPassword);
 		if(authService.canLogin(authentication)) {
 			getCurrentSession().setAttribute("currentUser", authentication);
+			reset();
 			return JsfUtil.redirectable("/views/monthlyBudget/list");
 		} else {
 			JsfUtil.addErrorMessage("Email/Password Incorrect");
 			return "";
 		}
+	}
+	
+	private void reset() {
+		authentication = new UserAuthentication();
 	}
 	
 	public boolean isLoggedIn() {
@@ -68,7 +78,9 @@ public class AuthenticationController implements Serializable{
 	}
 	
 	private HttpSession getCurrentSession() {
-		return (HttpSession)FacesContext.getCurrentInstance().getExternalContext();
+		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+		HttpServletRequest request =(HttpServletRequest) externalContext.getRequest();
+		return (HttpSession)request.getSession();
 	}
 
 }

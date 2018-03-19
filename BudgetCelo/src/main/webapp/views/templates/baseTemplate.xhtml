@@ -55,6 +55,7 @@
 											immediate="true"
 											icon="ui-icon-home" 
 											styleClass="autoWidth"
+											rendered="#{authenticationController.loggedIn}"
 											/>
 							<p:commandButton value="New"
 											action="#{monthlyBudgetController.goToNewBudget()}"
@@ -62,36 +63,47 @@
 											immediate="true"
 											icon="ui-icon-document" 
 											styleClass="autoWidth" 
+											rendered="#{authenticationController.loggedIn}"
 											/>
 							<p:commandButton value="Register"
 											action="#{userController.goToRegister()}"
 											immediate="true"
 											icon="ui-icon-document" 
 											styleClass="autoWidth" 
+											rendered="#{authenticationController.loggedIn eq false}"
+											/>
+<!-- 							<p:commandButton value="To Buy"  -->
+<!-- 											icon="ui-icon-disk" -->
+<!-- 											styleClass="autoWidth" -->
+<!-- 											immediate="true" -->
+<!-- 											rendered="#{authenticationController.loggedIn}" -->
+<!-- 											/> -->
+							<p:commandButton value="Login"
+											action="#{authenticationController.goToLogin()}"
+											immediate="true"
+											styleClass="autoWidth" 
+											rendered="#{authenticationController.loggedIn eq false}"
 											/>
 							<p:commandButton value="Logout"
-											action="#{userController.logout()}"
+											action="#{authenticationController.logout()}"
 											immediate="true"
 											icon="ui-icon-document" 
 											styleClass="autoWidth" 
+											rendered="#{authenticationController.loggedIn}"
 											/>
-							<p:commandButton value="To Buy" 
-											icon="ui-icon-disk"
-											styleClass="autoWidth"
-											immediate="true"/>
-							<p:commandButton  value="Theme" 
-											id="theme"
-											icon="ui-icon-star" 
-											styleClass="autoWidth" />
-							<p:overlayPanel for="theme">
-								<p:themeSwitcher var="t" buttonPreText="theme"
-									styleClass="autoWidth">
-									<f:selectItems value="#{headerController.themes}" 
-													var="theme"
-													itemLabel="#{theme.label}"
-													itemValue="#{theme.value}" />
-								</p:themeSwitcher>
-							</p:overlayPanel>	
+<!-- 							<p:commandButton  value="Theme"  -->
+<!-- 											id="theme" -->
+<!-- 											icon="ui-icon-star"  -->
+<!-- 											styleClass="autoWidth" /> -->
+<!-- 							<p:overlayPanel for="theme"> -->
+<!-- 								<p:themeSwitcher var="t" buttonPreText="theme" -->
+<!-- 									styleClass="autoWidth"> -->
+<!-- 									<f:selectItems value="#{headerController.themes}"  -->
+<!-- 													var="theme" -->
+<!-- 													itemLabel="#{theme.label}" -->
+<!-- 													itemValue="#{theme.value}" /> -->
+<!-- 								</p:themeSwitcher> -->
+<!-- 							</p:overlayPanel>	 -->
 						</div>
 					</f:facet>
 				</p:toolbar>

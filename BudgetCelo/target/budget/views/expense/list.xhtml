@@ -75,7 +75,6 @@
 					var="expense" editable="true" 
 					rowStyleClass="#{expense.completed ? 'completed' : null}">
 					<p:ajax event="rowEdit"
-					listener="#{monthlyBudgetController.sayHi(expense)}"
 					 update=":listExpensesForm:totalExpenses :monthlyBudgetForm :FifthyThirthy20RuleForm"/>
 
 					<p:column headerText="Name" styleClass="centered" sortBy="#{expense.name}">

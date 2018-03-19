@@ -26,7 +26,7 @@ public class AuthenticationDAO extends BaseDAO<UserAuthentication>{
 		try {
 			TypedQuery<UserAuthentication> tq = createTypedQuery(q);
 			UserAuthentication singleResult = tq.getSingleResult();
-			if(singleResult.getPassword().equals(auth.getUsername())) {
+			if(singleResult.getPassword().equals(auth.getPassword())) {
 				return true;
 			} else {
 				return false;

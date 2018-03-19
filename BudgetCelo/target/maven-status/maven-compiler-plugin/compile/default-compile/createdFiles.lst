@@ -1,6 +1,7 @@
 com\cBudget\service\ExpenseService.class
 com\cBudget\entity\UserAuthentication_.class
 com\cBudget\dao\BaseDAO.class
+com\cBudget\controller\utils\PasswordsUtil.class
 com\cBudget\controller\HeaderController.class
 com\cBudget\entity\enums\ExpenseType.class
 com\cBudget\service\BaseService.class
@@ -41,6 +42,7 @@ com\cBudget\entity\ExpenseTracker.class
 com\cBudget\service\ExpenseServiceImpl.class
 com\cBudget\entity\MonthlyBudget.class
 com\cBudget\dao\UserDAO.class
+com\cBudget\controller\validators\EmailValidator.class
 com\cBudget\entity\ToBuyItem.class
 com\cBudget\entity\BudgetItem_.class
 com\cBudget\entity\BudgetItem.class
