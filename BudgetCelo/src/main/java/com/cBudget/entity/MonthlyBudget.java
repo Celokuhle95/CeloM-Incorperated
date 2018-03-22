@@ -1,3 +1,7 @@
+/**
+ * @author celokuhle.myeza
+ */
+
 package com.cBudget.entity;
 
 import java.io.Serializable;

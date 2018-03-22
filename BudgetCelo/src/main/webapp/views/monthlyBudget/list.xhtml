@@ -20,7 +20,7 @@
 				<div>
 					<p:selectBooleanButton offLabel="Show" onLabel="Hide"
 						onIcon="ui-icon-close" offIcon="ui-icon-check" title="Amounts">
-						<p:ajax listener="#{monthlyBudgetController.toggleShowListBudgetsSensitiveInfo()}" 
+						<p:ajax listener="#{visibilityController.toggleShowListBudgetsSensitiveInfo()}" 
 								update=":listMonthlyBudgetForm"/>	
 					</p:selectBooleanButton>
 				</div>
@@ -35,25 +35,26 @@
 									<p:outputLabel value="#{monthlyBudget.month.toString()}" styleClass="centered"/>
 								</p:column>
 								<p:column headerText="Total Income (R)" styleClass="centered">
-									<p:outputLabel value="#{monthlyBudget.totalIncomeFormated}" rendered="#{monthlyBudgetController.getShowListBudgetsSensitiveInfo()}"/>
-									<p:outputLabel value="#{monthlyBudgetController.disguiser()}" rendered="#{monthlyBudgetController.getShowListBudgetsSensitiveInfo() eq false}"/>
+									<p:outputLabel value="#{monthlyBudget.totalIncomeFormated}" rendered="#{visibilityController.showListBudgetsSensitiveInfo}"/>
+									<p:outputLabel value="#{visibilityController.disguiser()}" rendered="#{visibilityController.showListBudgetsSensitiveInfo eq false}"/>
 								</p:column>
 								<p:column headerText="Expenses (R)" styleClass="centered">
-									<p:outputLabel value="#{monthlyBudget.totalExpensesFormated}" rendered="#{monthlyBudgetController.getShowListBudgetsSensitiveInfo()}"/>
-									<p:outputLabel value="#{monthlyBudgetController.disguiser()}" rendered="#{monthlyBudgetController.getShowListBudgetsSensitiveInfo() eq false}"/>
+									<p:outputLabel value="#{monthlyBudget.totalExpensesFormated}" rendered="#{visibilityController.showListBudgetsSensitiveInfo}"/>
+									<p:outputLabel value="#{visibilityController.disguiser()}" rendered="#{visibilityController.showListBudgetsSensitiveInfo eq false}"/>
 								</p:column>
 								<p:column headerText="Investments (R)" styleClass="centered">
 									<p:outputLabel
-										rendered="#{monthlyBudgetController.getShowListBudgetsSensitiveInfo()}"
+										rendered="#{visibilityController.showListBudgetsSensitiveInfo}"
 										value="#{monthlyBudget.totalInvestmentsFormated}" />
-									<p:outputLabel value="#{monthlyBudgetController.disguiser()}" rendered="#{monthlyBudgetController.getShowListBudgetsSensitiveInfo() eq false}"/>
+									<p:outputLabel value="#{visibilityController.disguiser()}" rendered="#{visibilityController.showListBudgetsSensitiveInfo eq false}"/>
 								</p:column>
 								<p:column headerText="Remaining	" styleClass="centered">
-									<p:outputLabel value="#{monthlyBudget.totalMoneyLeftFormated}" rendered="#{monthlyBudgetController.getShowListBudgetsSensitiveInfo()}"/>
-									<p:outputLabel value="#{monthlyBudgetController.disguiser()}"  rendered="#{monthlyBudgetController.getShowListBudgetsSensitiveInfo() eq false}"/>
+									<p:outputLabel value="#{monthlyBudget.totalMoneyLeftFormated}" rendered="#{visibilityController.showListBudgetsSensitiveInfo}"/>
+									<p:outputLabel value="#{visibilityController.disguiser()}"  rendered="#{visibilityController.showListBudgetsSensitiveInfo eq false}"/>
 								</p:column>
 								<p:column headerText="Details" styleClass="optionCol centered">
 									<p:commandButton value="View" action="#{monthlyBudgetController.goToView()}">
+										<f:ajax listener="#{visibilityController.hideAllSensitiveInfo()}"/>
 										<f:setPropertyActionListener value="#{monthlyBudget}" 
 																	target="#{monthlyBudgetController.monthlyBudget}"/>
 										<f:setPropertyActionListener value="#{monthlyBudget}" 

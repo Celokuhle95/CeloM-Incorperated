@@ -22,7 +22,7 @@
 					rendered="#{monthlyBudgetController.isView()}"
 					onIcon="ui-icon-close" offIcon="ui-icon-check">
 					<p:ajax
-						listener="#{monthlyBudgetController.toggleShowRuleSensitiveInfo()}"
+						listener="#{visibilityController.toggleShowRuleSensitiveInfo()}"
 						update=":FifthyThirthy20RuleForm" />
 
 				</p:selectBooleanButton>
@@ -48,15 +48,15 @@
 					<p:outputLabel value="#{rule.valueFormated}" />
 				</p:column>
 				<p:column styleClass="centered">
-					<p:outputLabel value="#{budgetRuleController.limitPercentageAmountFormated(rule)}" rendered="#{monthlyBudgetController.showRuleSensitiveInfo}"/>
-					<p:outputLabel value="#{monthlyBudgetController.disguiser()}" rendered="#{monthlyBudgetController.showRuleSensitiveInfo eq false}"/>
+					<p:outputLabel value="#{budgetRuleController.limitPercentageAmountFormated(rule)}" rendered="#{visibilityController.showRuleSensitiveInfo}"/>
+					<p:outputLabel value="#{visibilityController.disguiser()}" rendered="#{visibilityController.showRuleSensitiveInfo eq false}"/>
 				</p:column>
 				<p:column styleClass="centered">
 					<p:outputLabel 
 						value="#{budgetRuleController.respectiveSpendingAmountFormated(rule)}" 
-						rendered="#{monthlyBudgetController.showRuleSensitiveInfo}"
+						rendered="#{visibilityController.showRuleSensitiveInfo}"
 						/>
-					<p:outputLabel value="#{monthlyBudgetController.disguiser()}" rendered="#{monthlyBudgetController.showRuleSensitiveInfo eq false}"/>
+					<p:outputLabel value="#{visibilityController.disguiser()}" rendered="#{visibilityController.showRuleSensitiveInfo eq false}"/>
 				</p:column>
 				<p:column styleClass="centered">
 					<p:outputLabel style="color: #{budgetRuleController.textColor(rule)}"
@@ -87,14 +87,14 @@
 								 icon="ui-icon-refresh"
 								 update=":FifthyThirthy20RuleForm"
 								 ajax="true"
-								 rendered="#{monthlyBudgetController.showRuleSensitiveInfo}">
+								 rendered="#{visibilityController.showRuleSensitiveInfo}">
 					<f:setPropertyActionListener value="#{monthlyBudgetController.monthlyBudget}"
 									target="#{budgetRuleController.monthlyBudget}"/>
 			 	</p:commandButton>
 			</div>
 			
 			<div id="ruleReport">
-				<p:chart type="bar" rendered="#{monthlyBudgetController.showRuleSensitiveInfo}"
+				<p:chart type="bar" rendered="#{visibilityController.showRuleSensitiveInfo}"
 						 model="#{budgetRuleController.barChart}" 
 						 responsive="true" 
 						 />

@@ -14,7 +14,7 @@ import com.cBudget.entity.enums.comparators.EnumComparator;
 
 /**
  * 
- * @author Celokuhle Myeza
+ * @author Celokuhle.myeza
  *
  */
 

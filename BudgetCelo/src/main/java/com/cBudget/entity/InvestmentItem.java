@@ -4,12 +4,17 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Transient;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import com.cBudget.entity.enums.InvestmentType;
 import com.cBudget.entity.enums.RiskLevel;
@@ -32,14 +37,15 @@ public class InvestmentItem extends BudgetItem {
 	@Column
 	private Integer period;
 	
-	@Transient //map correct
-	private boolean completed;
-	
-	@Transient
-	private List<InvestementTracker> trackers;
+	@OneToMany(mappedBy = "investment", cascade = {CascadeType.ALL}, orphanRemoval = true)
+	@LazyCollection(LazyCollectionOption.FALSE)
+	private List<InvestmentTracker> trackers = new ArrayList<>();
 	
 	@ManyToOne
 	private MonthlyBudget monthlyBudget;
+	
+	@Transient //map correct
+	private boolean completed;
 
 	public InvestmentItem(InvestmentType investmentType, RiskLevel riskLevel, String name, BigDecimal amount,
 			BigDecimal interestRate, boolean isRecurring, Integer period) {
@@ -55,6 +61,14 @@ public class InvestmentItem extends BudgetItem {
 
 	public InvestmentItem() {
 		this.isRecurring = false;
+	}
+	
+	public BigDecimal getTotalTracked() {
+		BigDecimal total = BigDecimal.ZERO;
+		for (InvestmentTracker tracker : trackers) {
+			total = total.add(tracker.getAmount());
+		}
+		return total;
 	}
 
 	public RiskLevel getRiskLevel() {
@@ -113,12 +127,12 @@ public class InvestmentItem extends BudgetItem {
 		this.completed = completed;
 	}
 
-	public List<InvestementTracker> getTrackers() {
+	public List<InvestmentTracker> getTrackers() {
 		return trackers;
 	}
 
-	public void setTrackers(List<InvestementTracker> trackers) {
+	public void setTrackers(List<InvestmentTracker> trackers) {
 		this.trackers = trackers;
 	}
-	
+
 }

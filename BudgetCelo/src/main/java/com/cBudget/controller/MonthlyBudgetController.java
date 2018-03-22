@@ -1,3 +1,6 @@
+/**
+ * @author celokuhle.myeza
+ */
 package com.cBudget.controller;
 
 import java.io.Serializable;
@@ -37,20 +40,7 @@ public class MonthlyBudgetController implements Serializable {
 
 	private InvestmentItem investment = new InvestmentItem();
 
-	private boolean showListBudgetsSensitiveInfo = false;
-
-	private boolean showExpenseSensitiveInfo = false;
-
-	private boolean showInvestementSensitiveInfo = false;
-
-	private boolean showRuleSensitiveInfo = false;
-
-	private boolean showBudgetInfo = false;
-
 	private boolean isView = false;
-
-	public MonthlyBudgetController() {
-	}
 
 	public List<List<MonthlyBudget>> getAllBudgets() {
 		List<List<MonthlyBudget>> budgets = new ArrayList<>();
@@ -87,7 +77,7 @@ public class MonthlyBudgetController implements Serializable {
 			JsfUtil.addErrorMessage(
 					"Your Total Spendings cannot be greater than your Total Income, the difference is: R"
 							+ monthlyBudget.getTotalMoneyLeft());
-			return null;
+			return "";
 		}
 	}
 
@@ -98,18 +88,9 @@ public class MonthlyBudgetController implements Serializable {
 
 	public void delete(MonthlyBudget monthlyBudget) {
 		monthlyBudgetService.remove(monthlyBudget);
-		// show some message
+		JsfUtil.addSuccessMessage("Monthly Budget removed successfully.");
 	}
 
-	private boolean isExpenseValid() {
-		return expense.getExpenseType() != null && expense.getNecessityLevel() != null && expense.getName() != null
-				&& expense.getAmount() != null;
-	}
-
-	private boolean isInvestmentValid() {
-		return investment.getInvestmentType() != null && investment.getRiskLevel() != null
-				&& investment.getName() != null && investment.getAmount() != null;
-	}
 
 	public boolean isMonthlyBudgetValid() {
 		if (monthlyBudget.getYear() == null || monthlyBudget.getMonth() == null || monthlyBudget.getIncome() == null) {
@@ -129,13 +110,11 @@ public class MonthlyBudgetController implements Serializable {
 	}
 
 	public String goToAllBudgets() {
-		setShowListBudgetsSensitiveInfo(false);
 		return JsfUtil.redirectable("/views/monthlyBudget/list");
 	}
 
 	public String goToNewBudget() {
 		resetBudget();
-		showAllSensitiveInfo();
 		isView = false;
 		return JsfUtil.redirectable("/views/monthlyBudget/create");
 	}
@@ -144,26 +123,11 @@ public class MonthlyBudgetController implements Serializable {
 		monthlyBudget = new MonthlyBudget();
 	}
 
-	private void showAllSensitiveInfo() {
-		showExpenseSensitiveInfo = true;
-		showInvestementSensitiveInfo = true;
-		showRuleSensitiveInfo = true;
-		showBudgetInfo = false;
-	}
-
-	private void hideAllSensitiveInfo() {
-		showExpenseSensitiveInfo = false;
-		showInvestementSensitiveInfo = false;
-		showRuleSensitiveInfo = false;
-		showBudgetInfo = true;
-	}
-
 	public String getCurrentMonthAndYear() {
 		return null;
 	}
 
 	public String goToView() {
-		hideAllSensitiveInfo();
 		isView = true;
 		return JsfUtil.redirectable("/views/monthlyBudget/view");
 	}
@@ -184,10 +148,15 @@ public class MonthlyBudgetController implements Serializable {
 		return DropDownsUtil.getSelectItems(months);
 	}
 
-	public void updateMonthlyBudget() {
-
+	private boolean isExpenseValid() {
+		return expense.getExpenseType() != null && expense.getNecessityLevel() != null && expense.getName() != null
+				&& expense.getAmount() != null;
 	}
-
+	
+	private boolean isInvestmentValid() {
+		return investment.getInvestmentType() != null && investment.getRiskLevel() != null
+				&& investment.getName() != null && investment.getAmount() != null;
+	}
 	// getters/setters
 	public MonthlyBudget getMonthlyBudget() {
 		return monthlyBudget;
@@ -221,72 +190,12 @@ public class MonthlyBudgetController implements Serializable {
 		this.investment = investment;
 	}
 
-	public String disguiser() {
-		return "***";
-	}
-
-	public void toggleShowExpenseSensitiveInfo() {
-		showExpenseSensitiveInfo = !showExpenseSensitiveInfo;
-	}
-
-	public void toggleShowInvestementSensitiveInfo() {
-		showInvestementSensitiveInfo = !showInvestementSensitiveInfo;
-	}
-
-	public void toggleShowRuleSensitiveInfo() {
-		showRuleSensitiveInfo = !showRuleSensitiveInfo;
-	}
-
-	public void toggleShowListBudgetsSensitiveInfo() {
-		showListBudgetsSensitiveInfo = !showListBudgetsSensitiveInfo;
-	}
-
-	public boolean getShowListBudgetsSensitiveInfo() {
-		return showListBudgetsSensitiveInfo;
-	}
-
-	public void setShowListBudgetsSensitiveInfo(boolean showListBudgetsSensitiveInfo) {
-		this.showListBudgetsSensitiveInfo = showListBudgetsSensitiveInfo;
-	}
-
-	public boolean isShowExpenseSensitiveInfo() {
-		return showExpenseSensitiveInfo;
-	}
-
-	public void setShowExpenseSensitiveInfo(boolean showExpenseSensitiveInfo) {
-		this.showExpenseSensitiveInfo = showExpenseSensitiveInfo;
-	}
-
-	public boolean getShowInvestementSensitiveInfo() {
-		return showInvestementSensitiveInfo;
-	}
-
-	public void setShowInvestementSensitiveInfo(boolean showInvestementSensitiveInfo) {
-		this.showInvestementSensitiveInfo = showInvestementSensitiveInfo;
-	}
-
-	public boolean getShowRuleSensitiveInfo() {
-		return showRuleSensitiveInfo;
-	}
-
-	public void setShowRuleSensitiveInfo(boolean showRuleSensitiveInfo) {
-		this.showRuleSensitiveInfo = showRuleSensitiveInfo;
-	}
-
 	public boolean isView() {
 		return isView;
 	}
 
 	public void setView(boolean isView) {
 		this.isView = isView;
-	}
-
-	public boolean getShowBudgetInfo() {
-		return showBudgetInfo;
-	}
-
-	public void setShowBudgetInfo(boolean showBudgetInfo) {
-		this.showBudgetInfo = showBudgetInfo;
 	}
 
 }

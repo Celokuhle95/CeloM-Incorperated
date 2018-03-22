@@ -26,9 +26,9 @@
 								value="R#{monthlyBudgetController.monthlyBudget.totalExpensesFormated}"
 								styleClass="summaryCol" 
 								title="#{budgetRuleController.rules.get(0).description} (R#{budgetRuleController.limitPercentageAmount(budgetRuleController.rules.get(0))})"
-								rendered="#{monthlyBudgetController.showExpenseSensitiveInfo}"/>
-							<h:outputText value="#{monthlyBudgetController.disguiser()}" 
-										rendered="#{monthlyBudgetController.showExpenseSensitiveInfo eq false}"
+								rendered="#{visibilityController.showExpenseSensitiveInfo}"/>
+							<h:outputText value="#{visibilityController.disguiser()}" 
+										rendered="#{visibilityController.showExpenseSensitiveInfo eq false}"
 										style="color: #{budgetRuleController.textColor(budgetRuleController.rules.get(0))}" />
 						</p:panelGrid>
 						
@@ -60,7 +60,7 @@
 						<h:outputLabel value="Amounts: &nbsp;" rendered="#{monthlyBudgetController.isView()}"/>
 						<p:selectBooleanButton offLabel="Show" onLabel="Hide" rendered="#{monthlyBudgetController.isView()}"
 							onIcon="ui-icon-close" offIcon="ui-icon-check">
-							<p:ajax listener="#{monthlyBudgetController.toggleShowExpenseSensitiveInfo()}" 
+							<p:ajax listener="#{visibilityController.toggleShowExpenseSensitiveInfo()}" 
 									update=":listExpensesForm"
 							/>
 						</p:selectBooleanButton>
@@ -74,14 +74,13 @@
 					value="#{monthlyBudgetController.monthlyBudget.expenses}"
 					var="expense" editable="true" 
 					rowStyleClass="#{expense.completed ? 'completed' : null}">
-					<p:ajax event="rowEdit"
-					 update=":listExpensesForm:totalExpenses :monthlyBudgetForm :FifthyThirthy20RuleForm"/>
+					<p:ajax event="rowEdit" update=":listExpensesForm:totalExpenses :monthlyBudgetForm :FifthyThirthy20RuleForm"/>
 
 					<p:column headerText="Name" styleClass="centered" sortBy="#{expense.name}">
 						<p:cellEditor>
 							<f:facet name="output">
-								<h:outputText value="#{expense.name}" rendered="#{monthlyBudgetController.showExpenseSensitiveInfo}"/>
-								<h:outputText value="#{monthlyBudgetController.disguiser()}" rendered="#{monthlyBudgetController.showExpenseSensitiveInfo eq false}"/>
+								<h:outputText value="#{expense.name}" rendered="#{visibilityController.showExpenseSensitiveInfo}"/>
+								<h:outputText value="#{visibilityController.disguiser()}" rendered="#{visibilityController.showExpenseSensitiveInfo eq false}"/>
 							</f:facet>
 							<f:facet name="input">
 								<h:inputText value="#{expense.name}" styleClass="fillWidthOfParent tableEditInput"/>
@@ -91,8 +90,8 @@
 					<p:column headerText="Amount (R)" styleClass="centered" sortBy="#{expense.amount}">
 						<p:cellEditor>
 							<f:facet name="output">
-								<h:outputText value="#{expense.amountFormated}" rendered="#{monthlyBudgetController.showExpenseSensitiveInfo}"/>
-								<h:outputText value="#{monthlyBudgetController.disguiser()}" rendered="#{monthlyBudgetController.showExpenseSensitiveInfo eq false}"/>
+								<h:outputText value="#{expense.amountFormated}" rendered="#{visibilityController.showExpenseSensitiveInfo}"/>
+								<h:outputText value="#{visibilityController.disguiser()}" rendered="#{visibilityController.showExpenseSensitiveInfo eq false}"/>
 							</f:facet>
 							<f:facet name="input">
 								<h:inputText value="#{expense.amount}"

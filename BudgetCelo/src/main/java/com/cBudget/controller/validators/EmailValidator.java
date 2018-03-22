@@ -23,7 +23,7 @@ public class EmailValidator implements Validator<Object>, ClientValidator {
 	public EmailValidator() {
 		pattern = Pattern.compile(EMAIL_PATTERN);
 	}
-
+  
 	@Override
 	public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
 		if (value == null) {

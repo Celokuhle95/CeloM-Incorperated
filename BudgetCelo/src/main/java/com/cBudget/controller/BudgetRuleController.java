@@ -1,5 +1,5 @@
 /**
- * @author Celokuhle Myeza
+ * @author celokuhle.myeza
  */
 
 package com.cBudget.controller;
@@ -122,7 +122,6 @@ public class BudgetRuleController implements Serializable {
 
 	private void createBarChart() {
 		barChart = new BarChartModel();
-		barChart.setTitle("Report");
 		barChart.setLegendPosition("n");
 		barChart.setBarMargin(5);
 		barChart.setAnimate(true);

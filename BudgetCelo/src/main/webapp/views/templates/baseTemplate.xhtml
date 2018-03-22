@@ -19,9 +19,12 @@
 </h:head>
 <h:body>
 
-	<!-- 	<p:lifecycle /> -->
-	<!-- 			<p:log /> -->
-
+	<!-- <p:lifecycle /> -->
+	<!-- <p:logs/> -->
+	<f:metadata>
+		<f:event type="preValidate" listener="#{authenticationController.authenticate()}" />
+	</f:metadata>
+	
 	<p:ajaxStatus style="display:block;height:24px;position: fixed;left: 45%;top: 40%;">
 		<f:facet name="start">
 			<p:graphicImage value="#{resource['/images/load1.gif']}" />
@@ -55,8 +58,11 @@
 											immediate="true"
 											icon="ui-icon-home" 
 											styleClass="autoWidth"
-											rendered="#{authenticationController.loggedIn}"
-											/>
+											rendered="#{authenticationController.loggedIn}">
+								<f:setPropertyActionListener value="#{false}" 
+															 target="#{visibilityController.showListBudgetsSensitiveInfo}"/>
+							</p:commandButton>
+											
 							<p:commandButton value="New"
 											action="#{monthlyBudgetController.goToNewBudget()}"
 											actionListener="#{budgetRuleController.initForMonthlyBudgetCreation()}"
@@ -64,7 +70,9 @@
 											icon="ui-icon-document" 
 											styleClass="autoWidth" 
 											rendered="#{authenticationController.loggedIn}"
-											/>
+											>
+								<f:ajax listener="#{visibilityController.showAllSensitiveInfo()}"/>
+							</p:commandButton>
 							<p:commandButton value="Register"
 											action="#{userController.goToRegister()}"
 											immediate="true"

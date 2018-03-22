@@ -13,17 +13,8 @@ public class ExpenseServiceImpl implements ExpenseService{
 	private ExpenseDAO expenseDAO;
 	
 	@Override
-	public void update(ExpenseItem expense) {
-		System.out.println("Update Called");
+	public void edit(ExpenseItem expense) {
 		expenseDAO.edit(expense);
-	}
-	
-	protected ExpenseDAO getExpenseDAO() {
-		return expenseDAO;
-	}
-	
-	protected void setExpenseDAO(ExpenseDAO expenseDAO) {
-		this.expenseDAO = expenseDAO;
 	}
 	
 }

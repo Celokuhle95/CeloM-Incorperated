@@ -11,7 +11,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import com.cBudget.controller.utils.JsfUtil;
-import com.cBudget.controller.utils.PasswordsUtil;
+import com.cBudget.controller.utils.PasswordUtil;
 import com.cBudget.entity.User;
 import com.cBudget.entity.UserAuthentication;
 import com.cBudget.service.UserService;
@@ -37,7 +37,7 @@ public class UserController implements Serializable {
 		if (password.equals(confirmPassword)) {
 			UserAuthentication auth = new UserAuthentication();
 			auth.setUsername(user.getEmail());
-			String saltedAndHashedPassword = PasswordsUtil.generateHash(password);
+			String saltedAndHashedPassword = PasswordUtil.generateHash(password);
 			auth.setPassword(saltedAndHashedPassword);
 
 			user.setAuthentication(auth);

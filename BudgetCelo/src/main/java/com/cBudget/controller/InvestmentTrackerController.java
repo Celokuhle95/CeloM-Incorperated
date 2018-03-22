@@ -16,38 +16,38 @@ import org.primefaces.model.chart.ChartSeries;
 
 import com.cBudget.controller.utils.ColorUtil;
 import com.cBudget.controller.utils.JsfUtil;
-import com.cBudget.entity.ExpenseItem;
-import com.cBudget.entity.ExpenseTracker;
-import com.cBudget.service.ExpenseService;
+import com.cBudget.entity.InvestmentItem;
+import com.cBudget.entity.InvestmentTracker;
+import com.cBudget.service.InvestmentService;
 
 @Named
 @SessionScoped
-public class ExpenseTrackerController implements Serializable {
+public class InvestmentTrackerController implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
-	private ExpenseItem expense = new ExpenseItem();
-
-	private ExpenseTracker tracker = new ExpenseTracker();
-
+	private InvestmentItem investment = new InvestmentItem();
+	
+	private InvestmentTracker tracker = new InvestmentTracker();
+	
 	private BarChartModel barChart;
-
+	
 	@Inject
-	private ExpenseService service;
-
+	private InvestmentService service;
+	
 	public String save() {
-		service.edit(expense);
+		service.edit(investment);
 		return JsfUtil.redirectable("/views/monthlyBudget/view");
 	}
-
+	
 	public void addTracker() {
-		tracker.setExpense(expense);
-		expense.getTrackers().add(tracker);
+		tracker.setInvestment(investment);
+		investment.getTrackers().add(tracker);
 		reset();
-		RequestContext.getCurrentInstance().update("expenseTrackerDialogForm");
-		RequestContext.getCurrentInstance().execute("PF('expenseTrackerDialog').hide()");
+		RequestContext.getCurrentInstance().update("investmentTrackerDialogForm");
+		RequestContext.getCurrentInstance().execute("PF('investmentTrackerDialog').hide()");
 	}
-
+	
 	public void createBarChart() {
 		barChart = new BarChartModel();
 		barChart.setLegendPosition("ne");
@@ -59,55 +59,56 @@ public class ExpenseTrackerController implements Serializable {
 
 		initBarChart();
 	}
-
+	
 	public void initBarChart() {
 		barChart.clear();
-		ChartSeries allocated = addChartData("Allocated", expense.getAmount());
-		ChartSeries spent = addChartData("Spent", expense.getTotalTracked());
-
+		ChartSeries allocated = addChartData("Allocated", investment.getAmount());
+		ChartSeries spent = addChartData("Invested", investment.getTotalTracked());
+		
 		barChart.addSeries(allocated);
 		barChart.addSeries(spent);
 	}
-
+	
 	private ChartSeries addChartData(String label, BigDecimal value) {
 		ChartSeries series = new ChartSeries();
-		series.set("Spent", value);			
+		series.set("Invested", value);
 		series.setLabel(label);
 		return series;
 	}
 
 	public String getTrackedTotalColor() {
-		if (expense.getTotalTracked().compareTo(expense.getAmount()) == 1) {// greater than
+		if (investment.getTotalTracked().compareTo(investment.getAmount()) == 1) {// greater than
 			return ColorUtil.UNACCEPTED;
 		}
 		return ColorUtil.ACCEPTED;
 	}
-
+	
 	public String initTracker() {
 		reset();
-		if (expense.getTrackers() == null) {
-			expense.setTrackers(new ArrayList<>());
+		if (investment.getTrackers() == null) {
+			investment.setTrackers(new ArrayList<>());
 		}
-		return JsfUtil.redirectable("/views/tracker/expense");
+		return JsfUtil.redirectable("/views/tracker/investment");
 	}
 
+	
 	public void reset() {
-		tracker = new ExpenseTracker();
+		tracker = new InvestmentTracker();
 	}
 
-	public ExpenseItem getExpense() {
-		return expense;
+	public InvestmentItem getInvestment() {
+		return investment;
 	}
 
-	public void setExpense(ExpenseItem expense) {
-		this.expense = expense;
+	public void setInvestment(InvestmentItem investment) {
+		this.investment = investment;
 	}
 
-	public ExpenseTracker getTracker() {
+	public InvestmentTracker getTracker() {
 		return tracker;
 	}
 
-	public void setTracker(ExpenseTracker tracker) {
+	public void setTracker(InvestmentTracker tracker) {
 		this.tracker = tracker;
 	}
 
@@ -119,5 +120,5 @@ public class ExpenseTrackerController implements Serializable {
 	public void setBarChart(BarChartModel barChart) {
 		this.barChart = barChart;
 	}
-
+	
 }

@@ -6,7 +6,5 @@ import com.cBudget.entity.ExpenseItem;
 
 @Local
 public interface ExpenseService extends BaseService<ExpenseItem> {
-
-	void update(ExpenseItem expense);
 	
 }

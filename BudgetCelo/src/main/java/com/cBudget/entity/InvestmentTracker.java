@@ -1,7 +1,12 @@
 package com.cBudget.entity;
 
-public class InvestementTracker extends Tracker {
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 
+@Entity
+public class InvestmentTracker extends Tracker {
+
+	@ManyToOne
 	private InvestmentItem investment;
 
 	public InvestmentItem getInvestment() {

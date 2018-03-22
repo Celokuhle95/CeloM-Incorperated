@@ -3,9 +3,17 @@ package com.cBudget.controller.utils;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class PasswordsUtil {
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+public class PasswordUtil {
 	
 	private static final String SALT = "XCD-POQT-CELO";
+	
+	private PasswordUtil() {
+	}
 
 	public static String generateHash(String input) {
 		input = salted(input);
@@ -25,6 +33,21 @@ public class PasswordsUtil {
 			throw new RuntimeException(e);
 		}
 		return hash.toString();
+	}
+	
+	public static boolean isAuthenticated() {
+		HttpSession session = getCurrentSession();
+		if(session.getAttribute("currentUser") == null) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
+	public static HttpSession getCurrentSession() {
+		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+		HttpServletRequest request =(HttpServletRequest) externalContext.getRequest();
+		return (HttpSession)request.getSession(false);
 	}
 
 	private static String salted(String toSalt) {

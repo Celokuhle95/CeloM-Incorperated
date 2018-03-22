@@ -1,6 +1,5 @@
 C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\controller\HeaderController.java
 C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\controller\ExpenseTrackerController.java
-C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\controller\utils\PasswordsUtil.java
 C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\entity\enums\ExpenseType.java
 C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\service\UserService.java
 C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\entity\ExpenseItem.java
@@ -33,6 +32,7 @@ C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\entity\en
 C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\entity\enums\ImportanceLevel.java
 C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\entity\ExpenseTracker.java
 C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\service\BaseService.java
+C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\filter\AuthenticationFilter.java
 C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\service\MonthlyBudgetServiceImpl.java
 C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\dao\MonthlyBudgetDAO.java
 C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\service\MonthlyBudgetService.java
@@ -41,6 +41,8 @@ C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\service\E
 C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\controller\MonthlyBudgetController.java
 C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\service\AuthenticatiServiceImpl.java
 C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\controller\UserController.java
+C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\controller\utils\PasswordUtil.java
+C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\controller\VisibilityController.java
 C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\dao\ExpenseDAO.java
 C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\controller\validators\EmailValidator.java
 C:\myworkbench\CeloM-Incorperated\BudgetCelo\src\main\java\com\cBudget\entity\enums\comparators\EnumComparator.java

@@ -29,12 +29,11 @@
 								value="R#{monthlyBudgetController.monthlyBudget.totalInvestmentsFormated}"
 								styleClass="summaryCol"
 								title="#{budgetRuleController.rules.get(1).description} (R#{budgetRuleController.limitPercentageAmount(budgetRuleController.rules.get(1))})"
-								rendered="#{monthlyBudgetController.showInvestementSensitiveInfo}"
+								rendered="#{visibilityController.showInvestementSensitiveInfo}"
 								 />
-							<h:outputText value="#{monthlyBudgetController.disguiser()}" 
+							<h:outputText value="#{visibilityController.disguiser()}" 
 										style="color: #{budgetRuleController.textColor(budgetRuleController.rules.get(1))}"
-										rendered="#{monthlyBudgetController.showInvestementSensitiveInfo eq false}"/>
-
+										rendered="#{visibilityController.showInvestementSensitiveInfo eq false}"/>
 						</p:panelGrid>
 						<p:commandButton value="Forecast" id="forecast"
 							styleClass="seperateGridElements" rendered="#{monthlyBudgetController.isView()}" />
@@ -59,7 +58,7 @@
 						<p:selectBooleanButton offLabel="Show" onLabel="Hide" rendered="#{monthlyBudgetController.isView()}"
 							onIcon="ui-icon-close" offIcon="ui-icon-check">
 							<p:ajax
-								listener="#{monthlyBudgetController.toggleShowInvestementSensitiveInfo()}" 
+								listener="#{visibilityController.toggleShowInvestementSensitiveInfo()}" 
 								update=":listInvestmentsForm"
 								/>
 								
@@ -80,8 +79,8 @@
 					<p:column headerText="Name" styleClass="centered" sortBy="#{investment.name}">
 						<p:cellEditor>
 							<f:facet name="output">
-								<h:outputText value="#{investment.name}" rendered="#{monthlyBudgetController.showInvestementSensitiveInfo}"/>
-								<h:outputText value="#{monthlyBudgetController.disguiser()}" rendered="#{monthlyBudgetController.showInvestementSensitiveInfo eq false}"/>
+								<h:outputText value="#{investment.name}" rendered="#{visibilityController.showInvestementSensitiveInfo}"/>
+								<h:outputText value="#{visibilityController.disguiser()}" rendered="#{visibilityController.showInvestementSensitiveInfo eq false}"/>
 							</f:facet>
 							<f:facet name="input">
 								<h:inputText value="#{investment.name}" 
@@ -93,8 +92,8 @@
 						<p:cellEditor>
 							<f:facet name="output">
 								<h:outputText value="#{investment.amountFormated}"
-									title="#{investment.amountFormated}" rendered="#{monthlyBudgetController.showInvestementSensitiveInfo}"/>
-								<h:outputText value="#{monthlyBudgetController.disguiser()}" rendered="#{monthlyBudgetController.showInvestementSensitiveInfo eq false}"/>
+									title="#{investment.amountFormated}" rendered="#{visibilityController.showInvestementSensitiveInfo}"/>
+								<h:outputText value="#{visibilityController.disguiser()}" rendered="#{visibilityController.showInvestementSensitiveInfo eq false}"/>
 							</f:facet>
 							<f:facet name="input">
 								<h:inputText value="#{investment.amount}"
