@@ -11,11 +11,11 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Transient;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
+import com.cBudget.controller.utils.MoneyUtil;
 import com.cBudget.entity.enums.InvestmentType;
 import com.cBudget.entity.enums.RiskLevel;
 
@@ -44,7 +44,7 @@ public class InvestmentItem extends BudgetItem {
 	@ManyToOne
 	private MonthlyBudget monthlyBudget;
 	
-	@Transient //map correct
+	@Column
 	private boolean completed;
 
 	public InvestmentItem(InvestmentType investmentType, RiskLevel riskLevel, String name, BigDecimal amount,
@@ -55,11 +55,12 @@ public class InvestmentItem extends BudgetItem {
 		this.interestRate = interestRate;
 		this.isRecurring = isRecurring;
 		this.period = period;
-		this.completed = false;
 		this.trackers = new ArrayList<>();
+		this.completed = false;
 	}
 
 	public InvestmentItem() {
+		this.completed = false;
 		this.isRecurring = false;
 	}
 	
@@ -69,6 +70,10 @@ public class InvestmentItem extends BudgetItem {
 			total = total.add(tracker.getAmount());
 		}
 		return total;
+	}
+	
+	public String getTotalTrackedFormatted() {
+		return MoneyUtil.thousandSeperated(getTotalTracked());
 	}
 
 	public RiskLevel getRiskLevel() {

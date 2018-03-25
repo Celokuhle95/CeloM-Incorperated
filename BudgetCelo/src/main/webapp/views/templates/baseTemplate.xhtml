@@ -44,16 +44,28 @@
 			<h:form id="navbarForm">
 				<p:toolbar id="navbar">
 					<f:facet name="left">
-						<h:panelGrid columns="3">
+						<h:panelGrid columns="3" rendered="#{authenticationController.loggedIn}">
+							<p:commandLink
+								action="#{monthlyBudgetController.goToAllBudgets()}"
+								immediate="true">
+
+								<p:graphicImage value="#{resource['/images/logo.png']}"
+									style="display: block" /> 
+							</p:commandLink>
+							&nbsp;
+							<small> #{headerController.currentDate()} </small>
+						</h:panelGrid>
+						<h:panelGrid columns="3" rendered="#{!authenticationController.loggedIn}">
 							<p:graphicImage value="#{resource['/images/logo.png']}"
-								style="display: block" /> &nbsp;
+								style="display: block" /> 
+							&nbsp;
 							<small> #{headerController.currentDate()} </small>
 						</h:panelGrid>
 					</f:facet>
 
 					<f:facet name="right">
 						<div style="padding-top: 4px">
-							<p:commandButton value="All" 
+							<p:commandButton value="All Budgets" 
 											action="#{monthlyBudgetController.goToAllBudgets()}" 
 											immediate="true"
 											icon="ui-icon-home" 

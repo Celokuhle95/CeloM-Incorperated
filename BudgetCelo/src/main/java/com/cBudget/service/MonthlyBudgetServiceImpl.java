@@ -1,5 +1,6 @@
 package com.cBudget.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -7,6 +8,7 @@ import javax.inject.Inject;
 
 import com.cBudget.dao.MonthlyBudgetDAO;
 import com.cBudget.entity.MonthlyBudget;
+import com.cBudget.entity.enums.BudgetDate;
 
 @Stateless
 public class MonthlyBudgetServiceImpl implements MonthlyBudgetService {
@@ -16,13 +18,19 @@ public class MonthlyBudgetServiceImpl implements MonthlyBudgetService {
 
 	@Override
 	public void create(MonthlyBudget monthlyBudget) {
-		// do some recurring logic...
-		// Getting recurring values from previous months
-		// by writing the hasPreceedingMonthBudget(); and the getPreceedingMonth();
 		monthlyBudgetDAO.create(monthlyBudget);
-
+	}
+	
+	@Override
+	public MonthlyBudget getPreceedingBudget(BudgetDate bDate) {
+		return monthlyBudgetDAO.getPreceedingBudget(bDate);
 	}
 
+	@Override
+	public boolean alreadyAdded(BudgetDate bDate) {
+		return monthlyBudgetDAO.alreadyAdded(bDate);
+	}
+	
 	@Override
 	public void edit(MonthlyBudget monthlyBudget) {
 		monthlyBudgetDAO.edit(monthlyBudget);

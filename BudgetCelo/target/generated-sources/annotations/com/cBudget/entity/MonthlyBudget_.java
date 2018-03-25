@@ -12,6 +12,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 public abstract class MonthlyBudget_ {
 
 	public static volatile SingularAttribute<MonthlyBudget, BigDecimal> income;
+	public static volatile SingularAttribute<MonthlyBudget, User> owner;
 	public static volatile SingularAttribute<MonthlyBudget, BigDecimal> extraIncome;
 	public static volatile SingularAttribute<MonthlyBudget, Month> month;
 	public static volatile SingularAttribute<MonthlyBudget, Integer> year;

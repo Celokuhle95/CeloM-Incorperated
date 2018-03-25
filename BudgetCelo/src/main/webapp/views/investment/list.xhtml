@@ -7,6 +7,7 @@
 	xmlns:f="http://java.sun.com/jsf/core">
 <ui:composition>
 	<h:form id="listInvestmentsForm">
+		<p:growl id="investmentsGrowl" autoUpdate="true"/>
 		<p:panel styleClass="sectionPanel" 
 				 toggleable="true"
 				 rendered="#{monthlyBudgetController.isMonthlyBudgetValid()}"
@@ -17,7 +18,7 @@
 
 			<div id="actions">
 				<div style="float: left;">
-					<h:panelGrid columns="3">
+					<h:panelGrid columns="4">
 						<p:commandButton value="New" 
 							onclick="PF('createInvestmentDialog').show();" />
 
@@ -35,6 +36,18 @@
 										style="color: #{budgetRuleController.textColor(budgetRuleController.rules.get(1))}"
 										rendered="#{visibilityController.showInvestementSensitiveInfo eq false}"/>
 						</p:panelGrid>
+						
+						<p:commandButton value="Add Reccuring" 
+									action="#{monthlyBudgetController.addRecurringInvestmentsFromPreceedingBudget()}"
+									id="addReccurring"
+									ajax="true"
+									update=":listInvestmentsForm"
+									rendered="#{monthlyBudgetController.isView() eq false}"
+									disabled="#{monthlyBudgetController.moreRecurringInvestmentsAllowed eq false}"
+									styleClass="seperateGridElements"
+									title="Get Investments from a previous Budget that are recurring"
+									/>
+						
 						<p:commandButton value="Forecast" id="forecast"
 							styleClass="seperateGridElements" rendered="#{monthlyBudgetController.isView()}" />
 						<p:overlayPanel for="forecast" styleClass="forecastOverlay" rendered="#{monthlyBudgetController.isView()}">
@@ -182,6 +195,16 @@
 					</p:column>
 					<p:column headerText="Edit" styleClass="optionCol centered">
 						<p:rowEditor editTitle="Edit"/>
+					</p:column>
+					<p:column headerText="Track" styleClass="optionCol centered"
+							  rendered="#{monthlyBudgetController.isView()}">
+						<p:commandButton icon="ui-icon-star"
+							action="#{investmentTrackerController.initTracker()}"
+							title="Keep Track of Investment"
+							actionListener="#{investmentTrackerController.createBarChart}">
+							<f:setPropertyActionListener value="#{investment}"
+								target="#{investmentTrackerController.investment}" />
+						</p:commandButton>
 					</p:column>
 					<p:column headerText="Remove" styleClass="optionCol centered">
 						<p:commandButton icon="ui-icon-trash" 

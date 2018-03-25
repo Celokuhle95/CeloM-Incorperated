@@ -17,6 +17,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
@@ -54,6 +56,10 @@ public class MonthlyBudget implements Serializable {
 	@OneToMany(mappedBy = "monthlyBudget", cascade = { CascadeType.ALL }, orphanRemoval = true)
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<InvestmentItem> investments;
+
+	@ManyToOne(cascade = { CascadeType.ALL })
+	@JoinColumn(name = "owner_id")
+	private User owner;
 
 	@Transient
 	private BigDecimal totalExpenses;
@@ -133,6 +139,26 @@ public class MonthlyBudget implements Serializable {
 		return getTotalExpenses().add(getTotalInvestments());
 	}
 
+	public List<ExpenseItem> getRecurringExpenses() {
+		List<ExpenseItem> recurringExpenses = new ArrayList<>();
+		for (ExpenseItem expense : expenses) {
+			if (expense.getRecurring()) {
+				recurringExpenses.add(expense);
+			}
+		}
+		return recurringExpenses;
+	}
+
+	public List<InvestmentItem> getRecurringInvestments() {
+		List<InvestmentItem> recurringInvestments = new ArrayList<>();
+		for (InvestmentItem investment : investments) {
+			if (investment.getRecurring()) {
+				recurringInvestments.add(investment);
+			}
+		}
+		return recurringInvestments;
+	}
+
 	public Integer getId() {
 		return id;
 	}
@@ -188,6 +214,14 @@ public class MonthlyBudget implements Serializable {
 	public void setInvestments(List<InvestmentItem> investments) {
 		this.investments = investments;
 	}
+	
+	public User getOwner() {
+		return owner;
+	}
+
+	public void setOwner(User owner) {
+		this.owner= owner;
+	}
 
 	public void setTotalExpenses(BigDecimal totalCost) {
 		this.totalExpenses = totalCost;
@@ -210,4 +244,5 @@ public class MonthlyBudget implements Serializable {
 		return "MonthlyBudget [id=" + id + ", year=" + year + ", month=" + month + ", income=" + income
 				+ ", extraIncome=" + extraIncome + "]";
 	}
+
 }

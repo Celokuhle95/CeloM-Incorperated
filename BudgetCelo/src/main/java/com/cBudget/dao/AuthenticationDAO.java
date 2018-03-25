@@ -35,7 +35,6 @@ public class AuthenticationDAO extends BaseDAO<UserAuthentication>{
 			return false;
 		}
 		
-		
 	}
 
 }

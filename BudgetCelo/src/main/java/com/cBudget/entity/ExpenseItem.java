@@ -12,7 +12,6 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Transient;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -33,8 +32,7 @@ public class ExpenseItem extends BudgetItem implements Serializable {
 	private NecessityType necessityLevel;
 
 	@Column
-	private boolean isRecurring;// if true, this instance is created once
-	// only during the first time and copies forward to every month
+	private boolean isRecurring;
 	
 	@OneToMany(mappedBy = "expense", cascade = {CascadeType.ALL}, orphanRemoval = true)
 	@LazyCollection(LazyCollectionOption.FALSE)
@@ -43,7 +41,7 @@ public class ExpenseItem extends BudgetItem implements Serializable {
 	@ManyToOne
 	private MonthlyBudget monthlyBudget;
 	
-	@Transient //to map correctly later
+	@Column
 	private boolean completed;
 
 	public ExpenseItem(ExpenseType expenseType, NecessityType necessityLevel, String name, BigDecimal amount,
@@ -52,12 +50,13 @@ public class ExpenseItem extends BudgetItem implements Serializable {
 		this.necessityLevel = necessityLevel;
 		this.expenseType = expenseType;
 		this.isRecurring = isRecurring;
-		this.completed = false;
 		this.trackers = new ArrayList<>();
+		this.completed = false;
 	}
 
 	public ExpenseItem() {
 		this.isRecurring = false;
+		this.completed = false;
 	}
 	
 	public BigDecimal getTotalTracked() {

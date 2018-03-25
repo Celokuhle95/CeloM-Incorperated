@@ -16,6 +16,7 @@ public abstract class ExpenseItem_ extends com.cBudget.entity.BudgetItem_ {
 	public static volatile SingularAttribute<ExpenseItem, ExpenseType> expenseType;
 	public static volatile SingularAttribute<ExpenseItem, MonthlyBudget> monthlyBudget;
 	public static volatile SingularAttribute<ExpenseItem, Boolean> isRecurring;
+	public static volatile SingularAttribute<ExpenseItem, Boolean> completed;
 
 }
 

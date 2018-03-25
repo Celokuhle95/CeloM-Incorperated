@@ -21,8 +21,10 @@ import com.cBudget.controller.utils.JsfUtil;
 import com.cBudget.entity.ExpenseItem;
 import com.cBudget.entity.InvestmentItem;
 import com.cBudget.entity.MonthlyBudget;
+import com.cBudget.entity.enums.BudgetDate;
 import com.cBudget.entity.enums.Month;
 import com.cBudget.entity.enums.comparators.EnumComparator;
+import com.cBudget.service.AuthenticationService;
 import com.cBudget.service.MonthlyBudgetService;
 
 @Named(value = "monthlyBudgetController")
@@ -33,6 +35,9 @@ public class MonthlyBudgetController implements Serializable {
 
 	@Inject
 	private MonthlyBudgetService monthlyBudgetService;
+	
+	@Inject
+	private AuthenticationService authenticationService;
 
 	private MonthlyBudget monthlyBudget = new MonthlyBudget();
 
@@ -40,7 +45,57 @@ public class MonthlyBudgetController implements Serializable {
 
 	private InvestmentItem investment = new InvestmentItem();
 
-	private boolean isView = false;
+	private boolean isView;
+	
+	private boolean moreRecurringExpensesAllowed;
+	
+	private boolean moreRecurringInvestmentsAllowed;
+	
+	public void addRecurringExpensesFromPreceedingBudget() {
+		BudgetDate bDate= new BudgetDate(monthlyBudget.getMonth(), monthlyBudget.getYear());
+		MonthlyBudget preceedingBudget = monthlyBudgetService.getPreceedingBudget(bDate);
+		if(preceedingBudget != null) {
+			List<ExpenseItem> recurrungExpenses = makeExpensesReleventToCurrentBudget(preceedingBudget.getRecurringExpenses()); 
+			monthlyBudget.getExpenses().addAll(recurrungExpenses);
+			moreRecurringExpensesAllowed = false;
+		} else {
+			showNoPreviousBudgetsErrorMessage();
+			moreRecurringExpensesAllowed = false;
+		}
+	}
+
+	public void addRecurringInvestmentsFromPreceedingBudget() {
+		BudgetDate bDate= new BudgetDate(monthlyBudget.getMonth(), monthlyBudget.getYear());
+		MonthlyBudget preceedingBudget = monthlyBudgetService.getPreceedingBudget(bDate);
+		if(preceedingBudget != null) {
+			List<InvestmentItem> recurringInvestments = makeInvestmentsReleventeToCurrentBudget(preceedingBudget.getRecurringInvestments());
+			monthlyBudget.getInvestments().addAll(recurringInvestments);
+			moreRecurringInvestmentsAllowed = false;
+		} else {
+			showNoPreviousBudgetsErrorMessage();
+			moreRecurringInvestmentsAllowed = false;
+		}
+	}
+
+	private void showNoPreviousBudgetsErrorMessage() {
+		JsfUtil.addErrorMessage("No previous Budget found within the last 6 months, for the period: " + monthlyBudget.getMonth() + " " + monthlyBudget.getYear());
+	}
+	
+	private List<ExpenseItem> makeExpensesReleventToCurrentBudget(List<ExpenseItem> recurringExpenses) {
+		for (ExpenseItem expense : recurringExpenses) {
+			expense.setCompleted(false);
+			expense.setMonthlyBudget(monthlyBudget);
+		}
+		return recurringExpenses;
+	}
+	
+	private List<InvestmentItem> makeInvestmentsReleventeToCurrentBudget(List<InvestmentItem> recurringInvestments) {
+		for (InvestmentItem investment : recurringInvestments) {
+			investment.setCompleted(false);
+			investment.setMonthlyBudget(monthlyBudget);
+		}
+		return recurringInvestments;
+	}
 
 	public List<List<MonthlyBudget>> getAllBudgets() {
 		List<List<MonthlyBudget>> budgets = new ArrayList<>();
@@ -67,12 +122,21 @@ public class MonthlyBudgetController implements Serializable {
 			RequestContext.getCurrentInstance().execute("PF('createInvestmentDialog').hide()");
 		}
 	}
-
+	
 	public String create() {
 		if (!monthlyBudget.isMoneyGoingOutGreaterThanMoneyComingIn()) {
-			monthlyBudgetService.create(monthlyBudget);
-			JsfUtil.addSuccessMessage("Budget Created for " + monthlyBudget.getMonth() + " " + monthlyBudget.getYear());
-			return JsfUtil.redirectable("/views/monthlyBudget/list");
+			BudgetDate bDate= new BudgetDate(monthlyBudget.getMonth(), monthlyBudget.getYear());
+			if (!monthlyBudgetService.alreadyAdded(bDate)) {
+				monthlyBudget.setOwner(authenticationService.getCurrentUser());
+				monthlyBudgetService.edit(monthlyBudget);
+				JsfUtil.addSuccessMessage(
+						"Budget Created for " + monthlyBudget.getMonth() + " " + monthlyBudget.getYear());
+				return JsfUtil.redirectable("/views/monthlyBudget/list");
+			} else {
+				JsfUtil.addErrorMessage("There is an already existing budget for: " + monthlyBudget.getMonth() + " "
+						+ monthlyBudget.getYear());
+				return "";
+			}
 		} else {
 			JsfUtil.addErrorMessage(
 					"Your Total Spendings cannot be greater than your Total Income, the difference is: R"
@@ -90,7 +154,6 @@ public class MonthlyBudgetController implements Serializable {
 		monthlyBudgetService.remove(monthlyBudget);
 		JsfUtil.addSuccessMessage("Monthly Budget removed successfully.");
 	}
-
 
 	public boolean isMonthlyBudgetValid() {
 		if (monthlyBudget.getYear() == null || monthlyBudget.getMonth() == null || monthlyBudget.getIncome() == null) {
@@ -115,12 +178,14 @@ public class MonthlyBudgetController implements Serializable {
 
 	public String goToNewBudget() {
 		resetBudget();
-		isView = false;
 		return JsfUtil.redirectable("/views/monthlyBudget/create");
 	}
 
 	private void resetBudget() {
 		monthlyBudget = new MonthlyBudget();
+		isView = false;
+		moreRecurringExpensesAllowed = true;
+		moreRecurringInvestmentsAllowed = true;
 	}
 
 	public String getCurrentMonthAndYear() {
@@ -152,11 +217,12 @@ public class MonthlyBudgetController implements Serializable {
 		return expense.getExpenseType() != null && expense.getNecessityLevel() != null && expense.getName() != null
 				&& expense.getAmount() != null;
 	}
-	
+
 	private boolean isInvestmentValid() {
 		return investment.getInvestmentType() != null && investment.getRiskLevel() != null
 				&& investment.getName() != null && investment.getAmount() != null;
 	}
+
 	// getters/setters
 	public MonthlyBudget getMonthlyBudget() {
 		return monthlyBudget;
@@ -196,6 +262,22 @@ public class MonthlyBudgetController implements Serializable {
 
 	public void setView(boolean isView) {
 		this.isView = isView;
+	}
+
+	public boolean isMoreRecurringExpensesAllowed() {
+		return moreRecurringExpensesAllowed;
+	}
+
+	public void setMoreRecurringExpensesAllowed(boolean moreRecurringExpensesAllowed) {
+		this.moreRecurringExpensesAllowed = moreRecurringExpensesAllowed;
+	}
+
+	public boolean isMoreRecurringInvestmentsAllowed() {
+		return moreRecurringInvestmentsAllowed;
+	}
+
+	public void setMoreRecurringInvestmentsAllowed(boolean moreRecurringInvestmentsAllowed) {
+		this.moreRecurringInvestmentsAllowed = moreRecurringInvestmentsAllowed;
 	}
 
 }
