@@ -36,7 +36,7 @@ public class InvestmentTrackerController implements Serializable{
 	private InvestmentService service;
 	
 	public String save() {
-		if (investment.getTotalTracked().compareTo(investment.getAmount()) == 1) { //greater than			investment.setCompleted(true);
+		if (investment.getTotalTracked().compareTo(investment.getAmount()) == 1 || investment.getTotalTracked().compareTo(investment.getAmount()) == 0) { //greater than or equal
 			investment.setCompleted(true);
 		}
 		service.edit(investment);

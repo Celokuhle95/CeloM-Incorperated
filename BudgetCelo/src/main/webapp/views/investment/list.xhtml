@@ -18,7 +18,7 @@
 
 			<div id="actions">
 				<div style="float: left;">
-					<h:panelGrid columns="4">
+					<h:panelGrid columns="3">
 						<p:commandButton value="New" 
 							onclick="PF('createInvestmentDialog').show();" />
 
@@ -41,28 +41,12 @@
 									action="#{monthlyBudgetController.addRecurringInvestmentsFromPreceedingBudget()}"
 									id="addReccurring"
 									ajax="true"
-									update=":listInvestmentsForm"
+									update=":listInvestmentsForm :monthlyBudgetForm :FifthyThirthy20RuleForm"
 									rendered="#{monthlyBudgetController.isView() eq false}"
 									disabled="#{monthlyBudgetController.moreRecurringInvestmentsAllowed eq false}"
 									styleClass="seperateGridElements"
 									title="Get Investments from a previous Budget that are recurring"
 									/>
-						
-						<p:commandButton value="Forecast" id="forecast"
-							styleClass="seperateGridElements" rendered="#{monthlyBudgetController.isView()}" />
-						<p:overlayPanel for="forecast" styleClass="forecastOverlay" rendered="#{monthlyBudgetController.isView()}">
-							<p:panel header="Accounts" styleClass="sectionPanel">
-								<h:panelGrid columns="1">
-<!-- 									<ui:repeat var="" value=""> -->
-<!-- 										<p:commandLink value="view"/> -->
-<!-- 									</ui:repeat> -->
-								</h:panelGrid>
-							</p:panel>
-							<p:panel header="Loans" styleClass="sectionPanel">
-							</p:panel>
-							<p:panel header="Other Recurring" styleClass="sectionPanel">
-							</p:panel>
-						</p:overlayPanel>
 					</h:panelGrid>
 				</div>
 				<div style="float: right;">
@@ -101,10 +85,10 @@
 							</f:facet>
 						</p:cellEditor>
 					</p:column>
-					<p:column headerText="Amount (R)" styleClass="centered" sortBy="#{investment.amount}">
+					<p:column headerText="Amount" styleClass="centered" sortBy="#{investment.amount}">
 						<p:cellEditor>
 							<f:facet name="output">
-								<h:outputText value="#{investment.amountFormated}"
+								<h:outputText value="R#{investment.amountFormated}"
 									title="#{investment.amountFormated}" rendered="#{visibilityController.showInvestementSensitiveInfo}"/>
 								<h:outputText value="#{visibilityController.disguiser()}" rendered="#{visibilityController.showInvestementSensitiveInfo eq false}"/>
 							</f:facet>
@@ -142,10 +126,11 @@
 							</f:facet>
 						</p:cellEditor>
 					</p:column>
-					<p:column headerText="Interest Rate (%)" styleClass="centered" sortBy="#{investment.interestRate}">
+					<p:column headerText="Int. Rate" styleClass="centered" sortBy="#{investment.interestRate}">
 						<p:cellEditor>
 							<f:facet name="output">
-								<h:outputText value="#{investment.interestRate}" />
+								<h:outputText value="#{investment.interestRate}%" rendered="#{investment.interestRate ne nul}" />
+								<h:outputText value="#{investment.interestRate}" rendered="#{investment.interestRate eq nul}"/>
 							</f:facet>
 							<f:facet name="input">
 								<h:inputText value="#{investment.interestRate}" styleClass="fillWidthOfParent tableEditInput"/>
@@ -182,10 +167,11 @@
 							</f:facet>
 						</p:cellEditor>
 					</p:column>
-					<p:column headerText="Period (Months)" styleClass="optionCol centered" sortBy="#{investment.period}">
+					<p:column headerText="Term" styleClass="optionCol centered" sortBy="#{investment.period}">
 						<p:cellEditor>
 							<f:facet name="output">
-								<h:outputText value="#{investment.period}" />
+								<h:outputText value="#{investment.period} months" rendered="#{investment.period ne null}"  />
+								<h:outputText value="#{investment.period}" rendered="#{investment.period eq null}"  />
 							</f:facet>
 							<f:facet name="input">
 								<h:inputText value="#{investment.period}"
@@ -196,24 +182,40 @@
 					<p:column headerText="Edit" styleClass="optionCol centered">
 						<p:rowEditor editTitle="Edit"/>
 					</p:column>
-					<p:column headerText="Track" styleClass="optionCol centered"
-							  rendered="#{monthlyBudgetController.isView()}">
-						<p:commandButton icon="ui-icon-star"
-							action="#{investmentTrackerController.initTracker()}"
-							title="Keep Track of Investment"
-							actionListener="#{investmentTrackerController.createBarChart}">
-							<f:setPropertyActionListener value="#{investment}"
-								target="#{investmentTrackerController.investment}" />
+					<p:column headerText="Remove" styleClass="optionCol centered"
+							  rendered="#{monthlyBudgetController.isView() eq false}"
+							  >
+						  <p:commandButton icon="ui-icon-trash"
+									update="listInvestmentsForm :monthlyBudgetForm :FifthyThirthy20RuleForm"
+									ajax="true"
+									>
+								<p:collector unique="false" value="#{investment}"
+									removeFrom="#{monthlyBudgetController.monthlyBudget.investments}" />
 						</p:commandButton>
 					</p:column>
-					<p:column headerText="Remove" styleClass="optionCol centered">
-						<p:commandButton icon="ui-icon-trash" 
-										update="listInvestmentsForm :monthlyBudgetForm :FifthyThirthy20RuleForm"
-										title="Remove">
-							<p:confirm header="Confirmation" message="Are you sure you want to remove the Investment?" icon="ui-icon-alert"/>
-							<p:collector unique="false" value="#{investment}"
-								removeFrom="#{monthlyBudgetController.monthlyBudget.investments}" />
-						</p:commandButton>
+					<p:column headerText="Options" styleClass="optionCol centered"
+							  rendered="#{monthlyBudgetController.isView()}"
+							  title="Show">
+						<p:menuButton menuStyleClass="autoWidth">
+							<p:menuitem value="Track"
+									action="#{investmentTrackerController.initTracker()}"
+									title="Track and see your spending on this Investment"
+									actionListener="#{investmentTrackerController.createBarChart}"
+									>
+								<f:setPropertyActionListener value="#{investment}"
+															target="#{investmentTrackerController.investment}" />
+							</p:menuitem>
+							<p:menuitem value="Forecast">
+							
+							</p:menuitem>			
+							<p:menuitem value="Remove"
+									update="listInvestmentsForm :monthlyBudgetForm :FifthyThirthy20RuleForm"
+									ajax="true"
+									>
+								<p:collector unique="false" value="#{investment}"
+									removeFrom="#{monthlyBudgetController.monthlyBudget.investments}" />
+							</p:menuitem>
+						</p:menuButton>  
 					</p:column>
 				</p:dataTable>
 			</div>

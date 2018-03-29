@@ -15,11 +15,11 @@
 
 			<div id="budgetInfo">
 			
-				<p:panel styleClass="sectionPanel infoPanel">
+				<p:panel styleClass="sectionPanel infoPanelWidth">
 					<f:facet name="header">
 						<span>For:</span>
 					</f:facet>
-					<h:panelGrid columns="2" class="ui-fluid">
+					<h:panelGrid columns="2" class="ui-fluid" width="100%">
 						<p:outputLabel value="Year" for="year" />
 						<p:selectOneMenu
 							value="#{monthlyBudgetController.monthlyBudget.year}" id="year"
@@ -29,7 +29,7 @@
 								update=":listExpensesForm :listInvestmentsForm :FifthyThirthy20RuleForm" />
 							<f:selectItem itemLabel="select" noSelectionOption="true">
 							</f:selectItem>
-							<f:selectItems value="#{monthlyBudgetController.possibleYears}" />
+							<f:selectItems value="#{forwardMoverController.possibleYears}" />
 						</p:selectOneMenu>
 
 						<p:outputLabel value="Month" for="month" />
@@ -41,17 +41,17 @@
 								update=":listExpensesForm :listInvestmentsForm :FifthyThirthy20RuleForm" />
 							<f:selectItem itemLabel="select" noSelectionOption="true">
 							</f:selectItem>
-							<f:selectItems value="#{monthlyBudgetController.possibleMonths}" />
+							<f:selectItems value="#{forwardMoverController.possibleMonths}" />
 						</p:selectOneMenu>
 
 					</h:panelGrid>
 				</p:panel>
 			
-				<p:panel toggleable="true" styleClass="sectionPanel infoPanel" collapsed="#{visibilityController.showBudgetInfo}">
+				<p:panel toggleable="true" styleClass="sectionPanel infoPanelWidth" collapsed="#{visibilityController.showBudgetInfo}">
 					<f:facet name="header">
 						<span>Amounts:</span>
 					</f:facet>
-					<h:panelGrid columns="2" class="ui-fluid">
+					<h:panelGrid columns="2" class="ui-fluid" width="100%">
 						<p:outputLabel value="Income" for="income" />
 						<p:inputText id="income"
 							value="#{monthlyBudgetController.monthlyBudget.income}"

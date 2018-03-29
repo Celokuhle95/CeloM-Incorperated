@@ -57,7 +57,10 @@
 					<p:inputText id="email" 
 								value="#{userController.user.email}" 
 								validatorMessage="Email Address is invalid"
-								autocomplete="false">
+								autocomplete="false"
+								required="true"
+								requiredMessage="Email Address is required">
+								
 						<f:validator validatorId="custom.emailValidator" />
 					</p:inputText>
 

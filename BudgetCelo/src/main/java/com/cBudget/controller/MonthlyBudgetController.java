@@ -6,24 +6,18 @@ package com.cBudget.controller;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 import javax.enterprise.context.SessionScoped;
-import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.primefaces.context.RequestContext;
 
-import com.cBudget.controller.utils.DropDownsUtil;
 import com.cBudget.controller.utils.JsfUtil;
 import com.cBudget.entity.ExpenseItem;
 import com.cBudget.entity.InvestmentItem;
 import com.cBudget.entity.MonthlyBudget;
 import com.cBudget.entity.enums.BudgetDate;
-import com.cBudget.entity.enums.Month;
-import com.cBudget.entity.enums.comparators.EnumComparator;
 import com.cBudget.service.AuthenticationService;
 import com.cBudget.service.MonthlyBudgetService;
 
@@ -82,19 +76,33 @@ public class MonthlyBudgetController implements Serializable {
 	}
 	
 	private List<ExpenseItem> makeExpensesReleventToCurrentBudget(List<ExpenseItem> recurringExpenses) {
+		List<ExpenseItem> newOnes = new ArrayList<>();
 		for (ExpenseItem expense : recurringExpenses) {
-			expense.setCompleted(false);
-			expense.setMonthlyBudget(monthlyBudget);
+			ExpenseItem clonedExpense = cloneExpense(expense);
+			newOnes.add(clonedExpense);
 		}
-		return recurringExpenses;
+		return newOnes;
 	}
 	
 	private List<InvestmentItem> makeInvestmentsReleventeToCurrentBudget(List<InvestmentItem> recurringInvestments) {
+		List<InvestmentItem> newOnes = new ArrayList<>();
 		for (InvestmentItem investment : recurringInvestments) {
-			investment.setCompleted(false);
-			investment.setMonthlyBudget(monthlyBudget);
+			InvestmentItem clonedInvesment = cloneInvesment(investment);
+			newOnes.add(clonedInvesment);
 		}
-		return recurringInvestments;
+		return newOnes;
+	}
+	
+	private ExpenseItem cloneExpense(ExpenseItem other) {
+		ExpenseItem clone = new ExpenseItem(other.getExpenseType(), other.getNecessityLevel(), other.getName(), other.getAmount(), other.getRecurring());
+		clone.setMonthlyBudget(monthlyBudget);
+		return clone;
+	}
+	
+	private InvestmentItem cloneInvesment(InvestmentItem other) {
+		InvestmentItem clone = new InvestmentItem(other.getInvestmentType(), other.getRiskLevel(), other.getName(), other.getAmount(), other.getInterestRate(), other.getRecurring(), other.getPeriod());
+		clone.setMonthlyBudget(monthlyBudget);
+		return clone;
 	}
 
 	public List<List<MonthlyBudget>> getAllBudgets() {
@@ -195,22 +203,6 @@ public class MonthlyBudgetController implements Serializable {
 	public String goToView() {
 		isView = true;
 		return JsfUtil.redirectable("/views/monthlyBudget/view");
-	}
-
-	public SelectItem[] getPossibleYears() {
-		Map<Integer, Object> years = new TreeMap<>(EnumComparator.get());
-		years.put(2018, 2018);
-		years.put(2019, 2019);
-		years.put(2020, 2020);
-		return DropDownsUtil.getSelectItems(years);
-	}
-
-	public SelectItem[] getPossibleMonths() {
-		Map<Integer, Object> months = new TreeMap<>(EnumComparator.get());
-		for (Month month : Month.values()) {
-			months.put(month.ordinal(), month);
-		}
-		return DropDownsUtil.getSelectItems(months);
 	}
 
 	private boolean isExpenseValid() {

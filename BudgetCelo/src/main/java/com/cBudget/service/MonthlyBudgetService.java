@@ -6,7 +6,6 @@ import javax.ejb.Local;
 
 import com.cBudget.entity.MonthlyBudget;
 import com.cBudget.entity.enums.BudgetDate;
-import com.cBudget.entity.enums.Month;
 
 @Local
 public interface MonthlyBudgetService extends BaseService<MonthlyBudget>{

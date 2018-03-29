@@ -66,9 +66,9 @@
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
   <testcase classname="com.cBudget.controller.utils.DropDownsUtilTest" name="testGetInCapAndLowercaseWorksForAllUppercase" time="0"/>
-  <testcase classname="com.cBudget.controller.utils.DropDownsUtilTest" name="testContainsMultipleWordsShouldBeFalse" time="0"/>
   <testcase classname="com.cBudget.controller.utils.DropDownsUtilTest" name="testContainsMultipleWordsShouldBeTrue" time="0"/>
+  <testcase classname="com.cBudget.controller.utils.DropDownsUtilTest" name="testContainsMultipleWordsShouldBeFalse" time="0"/>
+  <testcase classname="com.cBudget.controller.utils.DropDownsUtilTest" name="testCapitaliseFirstLetterWorksForALowerCaseFirstLetter" time="0"/>
   <testcase classname="com.cBudget.controller.utils.DropDownsUtilTest" name="testGetInCapAndLowercaseWorksForUperAndLowercases" time="0"/>
   <testcase classname="com.cBudget.controller.utils.DropDownsUtilTest" name="testCapitaliseFirstLetterWorksForAnUpperCaseFirstLetter" time="0"/>
-  <testcase classname="com.cBudget.controller.utils.DropDownsUtilTest" name="testCapitaliseFirstLetterWorksForALowerCaseFirstLetter" time="0"/>
 </testsuite>

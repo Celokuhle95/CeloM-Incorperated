@@ -31,39 +31,26 @@
 			<br/>	 
 				 
 			<p:dataTable value="#{budgetRuleController.rules}" var="rule" > 
-				<p:columnGroup type="header">
-					<p:row>
-						<p:column headerText="%" rowspan="2" styleClass="thinCol"/>
-						<p:column headerText="Based on Explanation"  colspan="3"/>
-						<p:column headerText="Explanation" rowspan="2" />
-					</p:row>
-					<p:row>
-						<p:column headerText="Limit (R)"/>
-						<p:column headerText="Actual (R)"/>
-						<p:column headerText="Difference (%)" styleClass="optionCol"/>
-					</p:row>
-				</p:columnGroup>
-				
-				<p:column styleClass="centered">
-					<p:outputLabel value="#{rule.valueFormated}" />
+				<p:column styleClass="centered optionCol" headerText="Limit">
+					<p:outputLabel value="#{rule.valueFormated}%" />
 				</p:column>
-				<p:column styleClass="centered">
+				<p:column styleClass="centered" headerText="Calculated Income Percentage (R)">
 					<p:outputLabel value="#{budgetRuleController.limitPercentageAmountFormated(rule)}" rendered="#{visibilityController.showRuleSensitiveInfo}"/>
 					<p:outputLabel value="#{visibilityController.disguiser()}" rendered="#{visibilityController.showRuleSensitiveInfo eq false}"/>
 				</p:column>
-				<p:column styleClass="centered">
+				<p:column styleClass="centered" headerText="Actual Budgeted Total (R)">
 					<p:outputLabel 
 						value="#{budgetRuleController.respectiveSpendingAmountFormated(rule)}" 
 						rendered="#{visibilityController.showRuleSensitiveInfo}"
 						/>
 					<p:outputLabel value="#{visibilityController.disguiser()}" rendered="#{visibilityController.showRuleSensitiveInfo eq false}"/>
 				</p:column>
-				<p:column styleClass="centered">
+				<p:column styleClass="centered" headerText="Difference (%)">
 					<p:outputLabel style="color: #{budgetRuleController.textColor(rule)}"
 						value="#{budgetRuleController.differencePercentageFormated(rule)}"/>
 				</p:column>
-				<p:column styleClass="centered">
-					<p:commandButton value="View" id="description"
+				<p:column styleClass="optionCol centered" headerText="Explanation">
+					<p:commandButton value="view" id="description"
 						styleClass="autoWidth" title="For #{rule.summary}"/>
 					<p:overlayPanel for="description">
 						<p:outputLabel value="#{rule.description}" />
@@ -83,7 +70,7 @@
 			</script>
 			
 			<div>
-				<p:commandButton value="Refesh"
+				<p:commandButton title="Refesh"
 								 icon="ui-icon-refresh"
 								 update=":FifthyThirthy20RuleForm"
 								 ajax="true"
@@ -92,6 +79,8 @@
 									target="#{budgetRuleController.monthlyBudget}"/>
 			 	</p:commandButton>
 			</div>
+			
+		 	<br/>
 			
 			<div id="ruleReport">
 				<p:chart type="bar" rendered="#{visibilityController.showRuleSensitiveInfo}"

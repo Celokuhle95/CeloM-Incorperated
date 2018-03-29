@@ -15,7 +15,7 @@
 			 styleClass="centralDialog" 
 			 resizable="false" 
 			 responsive="true"
-			 showEffect="puff">
+			 >
 			 
 			<p:ajax event="close" listener="#{monthlyBudgetController.resetInvestment()}"/>
 			<h:form id="createInvestmentForm">
@@ -53,7 +53,7 @@
 					<p:inputText id="interestRate"
 						value="#{monthlyBudgetController.investment.interestRate}" />
 	
-					<p:outputLabel value="Period (in Months)" for="period" />
+					<p:outputLabel value="Term (in Months)" for="period" />
 					<p:inputText id="period"
 						value="#{monthlyBudgetController.investment.period}" />
 	

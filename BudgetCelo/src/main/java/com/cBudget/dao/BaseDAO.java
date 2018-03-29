@@ -28,12 +28,11 @@ public class BaseDAO<T> {
 	}
 
 	public void edit(T entity) {
-		System.out.println("UPDATE CALLED");
 		entityManager.merge(entity);
 	}
 
 	public void remove(T entity) {
-		entityManager.remove(entity);
+		entityManager.remove(entityManager.contains(entity) ? entity : entityManager.merge(entity));
 	}
 
 	public T find(Integer id) {

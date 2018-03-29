@@ -40,7 +40,7 @@ public class MonthlyBudget implements Serializable {
 	@Column
 	private Integer year;
 
-	@Enumerated(EnumType.STRING)
+	@Enumerated(EnumType.ORDINAL)
 	private Month month;
 
 	@Column
@@ -57,7 +57,7 @@ public class MonthlyBudget implements Serializable {
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<InvestmentItem> investments;
 
-	@ManyToOne(cascade = { CascadeType.ALL })
+	@ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
 	@JoinColumn(name = "owner_id")
 	private User owner;
 
@@ -214,13 +214,13 @@ public class MonthlyBudget implements Serializable {
 	public void setInvestments(List<InvestmentItem> investments) {
 		this.investments = investments;
 	}
-	
+
 	public User getOwner() {
 		return owner;
 	}
 
 	public void setOwner(User owner) {
-		this.owner= owner;
+		this.owner = owner;
 	}
 
 	public void setTotalExpenses(BigDecimal totalCost) {

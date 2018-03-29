@@ -72,10 +72,10 @@
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
-						<p:column headerText="Amount (R)" sortBy="#{tracker.amount}" styleClass="centered">
+						<p:column headerText="Amount" sortBy="#{tracker.amount}" styleClass="centered">
 							<p:cellEditor>
 								<f:facet name="output">
-									<p:outputLabel value="#{tracker.amountFormatted}" />
+									<p:outputLabel value="R#{tracker.amountFormatted}" />
 								</f:facet>
 								<f:facet name="input">
 									<p:inputText value="#{tracker.amount}" styleClass="fillWidthOfParent"/>
@@ -98,7 +98,7 @@
 											update=":expenseTrackerForm"
 											title="Remove"
 											ajax="true">
-								<p:confirm header="Confirmation" message="Are you sure you?"
+								<p:confirm header="Confirmation" message="Are you sure?"
 									icon="ui-icon-alert" />
 								<p:collector unique="false" value="#{tracker}" 
 									removeFrom="#{expenseTrackerController.expense.trackers}" />
@@ -133,7 +133,6 @@
 	<h:form id="expenseTrackerDialogForm">
 		<p:growl id="expenseTrackerDialogGrowl" autoUpdate="true"/>
 		<p:dialog id="expenseTrackerDialog"
-				 width="20%"
 				 widgetVar="expenseTrackerDialog" 
 				 closeOnEscape="true"
 				 closable="true"

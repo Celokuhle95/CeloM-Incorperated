@@ -14,6 +14,7 @@ com\cBudget\controller\ToBuyController.class
 com\cBudget\controller\utils\JsfUtil.class
 com\cBudget\controller\BudgetRuleController.class
 com\cBudget\controller\utils\MoneyUtil.class
+com\cBudget\controller\utils\BudgetDateUtil.class
 com\cBudget\entity\enums\ImportanceLevel.class
 com\cBudget\dao\AuthenticationDAO.class
 com\cBudget\entity\Tracker.class
@@ -21,6 +22,7 @@ com\cBudget\entity\enums\Month.class
 com\cBudget\service\MonthlyBudgetServiceImpl.class
 com\cBudget\service\UserService.class
 com\cBudget\entity\metamodel\MonthlyBudget_.class
+com\cBudget\controller\ForwardMoverController.class
 com\cBudget\entity\InvestmentItem_.class
 com\cBudget\entity\User.class
 com\cBudget\controller\AuthenticationController.class

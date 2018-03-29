@@ -1,11 +1,15 @@
 function disableBodyScroll() {
-	document.body.style.overflow = 'hidden';
+	$(document.body).css('position', 'absolute');
+	$(document.body).css('overflow', 'hidden');
+	console.log("hi")
 }
+
 
 function enableBodyScroll() {
-	document.body.style.overflow = '';
+	$(document.body).css('position', 'absolute');
+	$(document.body).css('overflow', 'visible');
+	console.log("Bye")
 }
-
 
 //var $html = $(document.documentElement);
 //$html.css('overflow', '');

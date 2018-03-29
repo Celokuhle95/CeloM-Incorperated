@@ -6,7 +6,6 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://java.sun.com/jsf/core">
 <ui:composition>
-
 	<p:dialog id="createExpenseDialog" 
 		widgetVar="createExpenseDialog"
 		header="Create Expense"
@@ -16,7 +15,7 @@
 		resizable="false"
 		responsive="true"
 		styleClass="centralDialog" 
-		showEffect="puff">
+		>
 		<p:ajax event="close" listener="#{monthlyBudgetController.resetExpense()}"/>
 		
 		<h:form id="createExpenseForm">
@@ -70,5 +69,16 @@
 		</h:form>
 	</p:dialog>
 
+	<script type="text/javascript">
+		function disableBodyScroll() {
+			$(document.body).css('position', 'absolute');
+			$(document.body).css('overflow', 'hidden');
+		}
+		
+		function enableBodyScroll() {
+			$(document.body).css('position', 'absolute');
+			$(document.body).css('overflow', 'visible');
+		}
+	</script>
 </ui:composition>
 </html>
