@@ -1,10 +1,11 @@
-package com.cBudget.service;
+package com.cBudget.service.impl;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import com.cBudget.dao.ExpenseDAO;
 import com.cBudget.entity.ExpenseItem;
+import com.cBudget.service.ExpenseService;
 
 @Stateless
 public class ExpenseServiceImpl implements ExpenseService{

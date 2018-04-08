@@ -1,4 +1,4 @@
-package com.cBudget.service;
+package com.cBudget.service.impl;
 
 import java.util.List;
 
@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import com.cBudget.dao.MonthlyBudgetDAO;
 import com.cBudget.entity.MonthlyBudget;
 import com.cBudget.entity.enums.BudgetDate;
+import com.cBudget.service.MonthlyBudgetService;
 
 @Stateless
 public class MonthlyBudgetServiceImpl implements MonthlyBudgetService {

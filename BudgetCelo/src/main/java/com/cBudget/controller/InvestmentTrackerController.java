@@ -40,7 +40,7 @@ public class InvestmentTrackerController implements Serializable{
 			investment.setCompleted(true);
 		}
 		service.edit(investment);
-		return JsfUtil.redirectable("/views/monthlyBudget/view");
+		return JsfUtil.redirectable("/views/monthlyBudget/list");
 	}
 	
 	public void addTracker() {

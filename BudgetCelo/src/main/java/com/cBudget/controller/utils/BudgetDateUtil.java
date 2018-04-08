@@ -2,6 +2,7 @@ package com.cBudget.controller.utils;
 
 import java.time.LocalDate;
 
+import com.cBudget.entity.enums.BudgetDate;
 import com.cBudget.entity.enums.Month;
 
 public class BudgetDateUtil {
@@ -17,7 +18,26 @@ public class BudgetDateUtil {
 		return now.getYear();
 	}
 	
-	public static void main(String[] args) {
-		getCurrentYear();
+	public static boolean isMonthValid(BudgetDate bd) {
+		Month currentMonth = getCurrentMonth();
+		if(isYearGreaterThanCurrentYear(bd.getYear())) {
+			return true;
+		}
+		if(currentMonth.ordinal() <= bd.getMonth().ordinal()) {
+			return true;
+		}
+		return false;
 	}
+	
+	private static boolean isYearGreaterThanCurrentYear(int forYear) {
+		return (forYear > getCurrentYear());			
+	}
+
+	public static boolean isYearValid(int year) {
+		if(getCurrentYear() <= year) {
+			return true;
+		}
+		return false;
+	}
+	
 }

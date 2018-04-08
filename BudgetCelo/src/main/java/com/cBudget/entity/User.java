@@ -56,6 +56,9 @@ public class User implements Serializable {
 	@OneToMany
 	private List<MonthlyBudget> budgets;
 	
+	@OneToMany
+	private List<ToBuyItem> toBuyItems;
+	
 	@OneToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "authentication_id")
 	private UserAuthentication authentication;
@@ -158,6 +161,14 @@ public class User implements Serializable {
 
 	public void setAuthentication(UserAuthentication authentication) {
 		this.authentication = authentication;
+	}
+
+	public List<ToBuyItem> getToBuyItems() {
+		return toBuyItems;
+	}
+
+	public void setToBuyItems(List<ToBuyItem> toBuyItems) {
+		this.toBuyItems = toBuyItems;
 	}
 	
 }

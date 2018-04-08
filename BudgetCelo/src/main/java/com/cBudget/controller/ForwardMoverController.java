@@ -24,7 +24,7 @@ public class ForwardMoverController implements Serializable{
 	}
 
 	public SelectItem[] getPossibleMonths() {
-		return DropDownsUtil.getSelectItems(calcPossibleMonths());
+		return DropDownsUtil.getSelectItems(currentMonthAndSpecifiedMonthsAhead(1));
 	}
 	
 	public SelectItem[] getAllPossibleMonthsInAYear() {
@@ -35,9 +35,8 @@ public class ForwardMoverController implements Serializable{
 		return DropDownsUtil.getSelectItems(months);
 	}
 	
-	public Map<Integer, Object> calcPossibleMonths() {
+	public Map<Integer, Object> currentMonthAndSpecifiedMonthsAhead(int numAllowedMonthsAhead) {
 		Map<Integer, Object> months = new TreeMap<>(EnumComparator.get());
-		int numAllowedMonthsAhead = 1;
 		Month currentMonth = BudgetDateUtil.getCurrentMonth();
 		months.put(currentMonth.ordinal(), currentMonth);
 		for (int i = 0; i < numAllowedMonthsAhead; i++) {
@@ -48,8 +47,19 @@ public class ForwardMoverController implements Serializable{
 	}
 	
 	public Map<Integer, Object> calcPossibleYears() {
+		Month currentMonth = BudgetDateUtil.getCurrentMonth();
+		if(currentMonth.equals(Month.DECEMBER)) {
+			return currentYearAndSpecifiedYearsAhead(1);
+		} else {
+			Map<Integer, Object> years = new TreeMap<>(EnumComparator.get());
+			Integer currentYear = BudgetDateUtil.getCurrentYear();
+			years.put(currentYear, currentYear);
+			return years;
+		}
+	}
+
+	public Map<Integer, Object> currentYearAndSpecifiedYearsAhead(int numAllowedMonthsAhead) {
 		Map<Integer, Object> years = new TreeMap<>(EnumComparator.get());
-		int numAllowedMonthsAhead = 1;
 		Integer currentYear = BudgetDateUtil.getCurrentYear();
 		years.put(currentYear, currentYear);
 		for (int i = 0; i < numAllowedMonthsAhead; i++) {

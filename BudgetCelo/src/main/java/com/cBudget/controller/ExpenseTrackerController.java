@@ -36,11 +36,11 @@ public class ExpenseTrackerController implements Serializable {
 	private ExpenseService service;
 
 	public String save() {
-		if(expense.getTotalTracked().compareTo(expense.getAmount()) == 1) {//greater than
+		if(expense.getTotalTracked().compareTo(expense.getAmount()) == 1 || expense.getTotalTracked().compareTo(expense.getAmount()) == 0) {//greater than
 			expense.setCompleted(true);
 		}
 		service.edit(expense);
-		return JsfUtil.redirectable("/views/monthlyBudget/view");
+		return JsfUtil.redirectable("/views/monthlyBudget/list");
 	}
 
 	public void addTracker() {
