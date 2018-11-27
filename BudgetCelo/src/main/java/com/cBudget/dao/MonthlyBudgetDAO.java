@@ -82,7 +82,10 @@ public class MonthlyBudgetDAO extends BaseDAO<MonthlyBudget> {
 	
 	private BudgetDate getPreviousBudgetDate(BudgetDate bDate) {
 		if(bDate.getMonth().equals(Month.JANUARY)) {
-			return new BudgetDate(Month.DECEMBER, getPreviousYear(bDate.getYear()));
+			System.out.println("It Is Jan");
+			BudgetDate budgetDate = new BudgetDate(Month.DECEMBER, getPreviousYear(bDate.getYear()));
+			System.out.println("WHo come after: " + budgetDate.getYear() + " " + budgetDate.getMonth());
+			return budgetDate;
 		}
 		return new BudgetDate(getPreviosMonth(bDate.getMonth()), bDate.getYear());
 	}
@@ -92,7 +95,7 @@ public class MonthlyBudgetDAO extends BaseDAO<MonthlyBudget> {
 	}
 
 	private int getPreviousYear(int currentYear) {
-		return currentYear--;
+		return --currentYear;
 	}
 	
 }
