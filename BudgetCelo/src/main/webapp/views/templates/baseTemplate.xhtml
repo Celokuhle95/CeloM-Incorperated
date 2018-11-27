@@ -9,6 +9,11 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 	<title>NavBar or header</title>
 
+	<f:facet name="last">
+		<h:outputStylesheet name="css/budget.css" />
+		<h:outputScript name="js/budget.js" />
+	</f:facet>
+
 	<script type="text/javascript">
 		PrimeFaces.info('Info message');
 		PrimeFaces.debug('Debug message');
@@ -16,16 +21,19 @@
 		PrimeFaces.error('Error message');
 	</script>
 
+
 </h:head>
 <h:body>
 
 	<!-- <p:lifecycle /> -->
 	<!-- <p:logs/> -->
 	<f:metadata>
-		<f:event type="preValidate" listener="#{authenticationController.authenticate()}" />
+		<f:event type="preValidate"
+			listener="#{authenticationController.authenticate()}" />
 	</f:metadata>
-	
-	<p:ajaxStatus style="display:block;height:24px;position: fixed;left: 45%;top: 40%;">
+
+	<p:ajaxStatus
+		style="display:block;height:24px;position: fixed;left: 45%;top: 40%;">
 		<f:facet name="start">
 			<p:graphicImage value="#{resource['/images/load1.gif']}" />
 		</f:facet>
@@ -34,28 +42,26 @@
 		</f:facet>
 	</p:ajaxStatus>
 
-	<f:facet name="last">
-		<h:outputStylesheet name="css/budget.css" />
-		<h:outputScript name="js/budget.js" />
-	</f:facet>
 	<div id="header" class="ui-fluid pageContainer">
 
 		<ui:insert name="header">
 			<h:form id="navbarForm">
-				<p:toolbar id="navbar">
+				<p:toolbar id="navbar" styleClass="customNav" style="padding-right: 3%">
 					<f:facet name="left">
-						<h:panelGrid columns="3" rendered="#{authenticationController.loggedIn}">
+						<h:panelGrid columns="3"
+							rendered="#{authenticationController.loggedIn}">
 							<p:commandLink
 								action="#{monthlyBudgetController.goToAllBudgets()}"
 								immediate="true">
 
 								<p:graphicImage value="#{resource['/images/logo.png']}"
-									style="display: block" /> 
+									style="display: block" />
 							</p:commandLink>
 							&nbsp;
 							<small> #{headerController.currentDate()} </small>
 						</h:panelGrid>
-						<h:panelGrid columns="3" rendered="#{!authenticationController.loggedIn}">
+						<h:panelGrid columns="3"
+							rendered="#{!authenticationController.loggedIn}">
 							<p:graphicImage value="#{resource['/images/logo.png']}"
 								style="display: block" /> 
 							&nbsp;
@@ -65,65 +71,55 @@
 
 					<f:facet name="right">
 						<div style="padding-top: 4px">
-							<p:commandButton value="All Budgets" 
-											action="#{monthlyBudgetController.goToAllBudgets()}" 
-											immediate="true"
-											icon="ui-icon-home" 
-											styleClass="autoWidth"
-											rendered="#{authenticationController.loggedIn}">
-								<f:setPropertyActionListener value="#{false}" 
-															 target="#{visibilityController.showListBudgetsSensitiveInfo}"/>
+							<p:commandButton value="Overview"
+								action="#{monthlyBudgetController.goToAllBudgets()}"
+								immediate="true" icon="ui-icon-home" styleClass="autoWidth"
+								rendered="#{authenticationController.loggedIn}">
+								<f:setPropertyActionListener value="#{false}"
+									target="#{visibilityController.showListBudgetsSensitiveInfo}" />
 							</p:commandButton>
-											
+
 							<p:commandButton value="New"
-											action="#{monthlyBudgetController.goToNewBudget()}"
-											actionListener="#{budgetRuleController.initForMonthlyBudgetCreation()}"
-											immediate="true"
-											icon="ui-icon-document" 
-											styleClass="autoWidth" 
-											rendered="#{authenticationController.loggedIn}"
-											>
-								<f:ajax listener="#{visibilityController.showAllSensitiveInfo()}"/>
+								action="#{monthlyBudgetController.goToNewBudget()}"
+								actionListener="#{budgetRuleController.initForMonthlyBudgetCreation()}"
+								immediate="true" icon="ui-icon-document" styleClass="autoWidth"
+								rendered="#{authenticationController.loggedIn}">
+								<f:ajax
+									listener="#{visibilityController.showAllSensitiveInfo()}" />
 							</p:commandButton>
+
+							<p:commandButton value="To Buy"
+								action="#{toBuyController.goToToBuy()}" immediate="true"
+								icon="ui-icon-disk" styleClass="autoWidth"
+								rendered="#{authenticationController.loggedIn}" />
+
 							<p:commandButton value="Register"
-											action="#{userController.goToRegister()}"
-											immediate="true"
-											icon="ui-icon-document" 
-											styleClass="autoWidth" 
-											rendered="#{authenticationController.loggedIn eq false}"
-											/>
-<!-- 							<p:commandButton value="To Buy"  -->
-<!-- 											icon="ui-icon-disk" -->
-<!-- 											styleClass="autoWidth" -->
-<!-- 											immediate="true" -->
-<!-- 											rendered="#{authenticationController.loggedIn}" -->
-<!-- 											/> -->
+								action="#{userController.goToRegister()}" immediate="true"
+								icon="ui-icon-document" styleClass="autoWidth"
+								rendered="#{authenticationController.loggedIn eq false}" />
+
 							<p:commandButton value="Login"
-											action="#{authenticationController.goToLogin()}"
-											immediate="true"
-											styleClass="autoWidth" 
-											rendered="#{authenticationController.loggedIn eq false}"
-											/>
+								action="#{authenticationController.goToLogin()}"
+								immediate="true" styleClass="autoWidth"
+								rendered="#{authenticationController.loggedIn eq false}" />
 							<p:commandButton value="Logout"
-											action="#{authenticationController.logout()}"
-											immediate="true"
-											icon="ui-icon-document" 
-											styleClass="autoWidth" 
-											rendered="#{authenticationController.loggedIn}"
-											/>
-<!-- 							<p:commandButton  value="Theme"  -->
-<!-- 											id="theme" -->
-<!-- 											icon="ui-icon-star"  -->
-<!-- 											styleClass="autoWidth" /> -->
-<!-- 							<p:overlayPanel for="theme"> -->
-<!-- 								<p:themeSwitcher var="t" buttonPreText="theme" -->
-<!-- 									styleClass="autoWidth"> -->
-<!-- 									<f:selectItems value="#{headerController.themes}"  -->
-<!-- 													var="theme" -->
-<!-- 													itemLabel="#{theme.label}" -->
-<!-- 													itemValue="#{theme.value}" /> -->
-<!-- 								</p:themeSwitcher> -->
-<!-- 							</p:overlayPanel>	 -->
+								action="#{authenticationController.logout()}" immediate="true"
+								icon="ui-icon-document"
+								styleClass="autoWidth sessionControlButton"
+								rendered="#{authenticationController.loggedIn}" />
+							<!-- 							<p:commandButton  value="Theme"  -->
+							<!-- 											id="theme" -->
+							<!-- 											icon="ui-icon-star"  -->
+							<!-- 											styleClass="autoWidth" /> -->
+							<!-- 							<p:overlayPanel for="theme"> -->
+							<!-- 								<p:themeSwitcher var="t" buttonPreText="theme" -->
+							<!-- 									styleClass="autoWidth"> -->
+							<!-- 									<f:selectItems value="#{headerController.themes}"  -->
+							<!-- 													var="theme" -->
+							<!-- 													itemLabel="#{theme.label}" -->
+							<!-- 													itemValue="#{theme.value}" /> -->
+							<!-- 								</p:themeSwitcher> -->
+							<!-- 							</p:overlayPanel>	 -->
 						</div>
 					</f:facet>
 				</p:toolbar>
@@ -131,28 +127,30 @@
 			<p:sticky target="navbarForm:navbar" />
 		</ui:insert>
 	</div>
-	
-	<div id="pageHeader" class="pageContainer centered">
+
+<!-- 	<div id="pageHeader" class="pageContainer centered"> -->
+	<div id="pageHeader" class="pageContainer">
 		<ui:insert name="pageHeader">
 		</ui:insert>
 	</div>
-	
+
 	<div id="content" class="pageContainer">
 		<ui:insert name="content">
 		</ui:insert>
 	</div>
-	
+
 	<h:form>
 		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
-		 closable="true" closeOnEscape="true" >
-		 <div class="centered">
-			<p:commandButton value="Yes" type="button"
-				styleClass="ui-confirmdialog-yes" icon="ui-icon-check" style="background: red" />
-			<p:commandButton value="No" type="button"
-				styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-		 </div>
+			closable="true" closeOnEscape="true">
+			<div class="centered">
+				<p:commandButton value="Yes" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check"
+					style="background: red" />
+				<p:commandButton value="No" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</div>
 		</p:confirmDialog>
 	</h:form>
-	
+
 </h:body>
 </html>

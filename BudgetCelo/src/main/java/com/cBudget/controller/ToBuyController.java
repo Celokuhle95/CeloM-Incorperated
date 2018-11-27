@@ -1,6 +1,7 @@
 package com.cBudget.controller;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -34,18 +35,22 @@ public class ToBuyController implements Serializable{
 	@Inject
 	private AuthenticationService authenticationService;
 	
-	private List<ToBuyItem> toBuyItems = new ArrayList<>();
+	private List<ToBuyItem> toBuys = new ArrayList<>();
 	
-	private ToBuyItem toBuyItem = new ToBuyItem();
+	private ToBuyItem toBuy = new ToBuyItem();
+	
+	public BigDecimal totalTobuys() {
+		return null;
+	}
 	
 	public void save() {
-		toBuyService.update(toBuyItems);
+		toBuyService.update(toBuys);
 	}
 	
 	public void addItem() {
 		if(isValid()) {
-			toBuyItem.setOwner(authenticationService.getCurrentUser());
-			toBuyItems.add(toBuyItem);
+			toBuy.setOwner(authenticationService.getCurrentUser());
+			toBuys.add(toBuy);
 			//hide the dialog
 			reset();
 		} else {
@@ -54,8 +59,8 @@ public class ToBuyController implements Serializable{
 	}
 	
 	private boolean isValid() {
-		if(BudgetDateUtil.isYearValid(toBuyItem.getBuyYear())) {
-			BudgetDate budgetDate = new BudgetDate(toBuyItem.getBuyMonth(), toBuyItem.getBuyYear());
+		if(BudgetDateUtil.isYearValid(toBuy.getBuyYear())) {
+			BudgetDate budgetDate = new BudgetDate(toBuy.getBuyMonth(), toBuy.getBuyYear());
 			if(BudgetDateUtil.isMonthValid(budgetDate)) {
 				return true;
 			} 
@@ -65,9 +70,6 @@ public class ToBuyController implements Serializable{
 		}
 	}
 	
-	private void reset() {
-		toBuyItem = new ToBuyItem();
-	}
 	
 	public SelectItem[] getTypes() {
 		Map<Integer, Object> toBuyTypes = new TreeMap<>(EnumComparator.get());
@@ -84,21 +86,29 @@ public class ToBuyController implements Serializable{
 		}
 		return DropDownsUtil.getSelectItems(importanceLevels);
 	}
-
-	public ToBuyItem getToBuyItem() {
-		return toBuyItem;
+	
+	public String goToToBuy() {
+		return JsfUtil.redirectable("/views/toBuy/list");
+	}
+	
+	public void reset() {
+		toBuy = new ToBuyItem();
 	}
 
-	public void setToBuyItem(ToBuyItem toBuyItem) {
-		this.toBuyItem = toBuyItem;
+	public ToBuyItem getToBuy() {
+		return toBuy;
 	}
 
-	public List<ToBuyItem> getToBuyItems() {
-		return toBuyItems;
+	public void setToBuy(ToBuyItem toBuyItem) {
+		this.toBuy = toBuyItem;
 	}
 
-	public void setToBuyItems(List<ToBuyItem> toBuyItems) {
-		this.toBuyItems = toBuyItems;
+	public List<ToBuyItem> getToBuys() {
+		return toBuys;
+	}
+
+	public void setToBuys(List<ToBuyItem> toBuyItems) {
+		this.toBuys = toBuyItems;
 	}
 	
 }

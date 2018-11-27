@@ -13,97 +13,117 @@
 
 	<ui:define name="content">
 		<h:form id="registerForm">
-			<p:growl id="message" autoUpdate="true"/>
-			<p:panel styleClass="sectionPanel blankBackground">
-				<h:panelGrid columns="2">
+			<p:growl id="message" autoUpdate="true" />
+			<div class="noAuthenticationNeededPage" style="padding-left: 15%; padding-right: 15%;">
+				<div class="box">
+					<p:panel styleClass="sectionPanel blankBackground">
+						<h:panelGrid columns="2" styleClass="fillWidthOfParent">
+							<p:spacer />
+							<p:spacer />
+							<p:outputLabel value="Name" for="name"
+								styleClass="squared fillWidthOfParent" />
+							<p:inputText id="name" value="#{userController.user.name}"
+								required="true" requiredMessage="Name is required"
+								styleClass="squared fillWidthOfParent" />
+							<p:spacer />
+							<p:spacer />
 
-					<p:outputLabel value="Name" for="name" />
-					<p:inputText id="name" 
-								 value="#{userController.user.name}"
-								 required="true"
-								 requiredMessage="Name is required" />
+							<p:outputLabel value="Surname" for="surname"
+								styleClass="squared fillWidthOfParent" />
+							<p:inputText id="surname" value="#{userController.user.surname}"
+								required="true" requiredMessage="Surname is required"
+								styleClass="squared fillWidthOfParent" />
+							<p:spacer />
+							<p:spacer />
 
-					<p:outputLabel value="Surname" for="surname" />
-					<p:inputText id="surname" 
-								 value="#{userController.user.surname}"
-								 required="true" 
-								 requiredMessage="Surname is required"/>
+							<p:outputLabel value="ID No." for="idNumber"
+								styleClass="squared fillWidthOfParent" />
+							<p:inputMask id="idNumber"
+								value="#{userController.user.IDNumber}" required="true"
+								requiredMessage="ID No. is required" mask="999999 9999 999"
+								styleClass="squared fillWidthOfParent" />
+							<p:spacer />
+							<p:spacer />
 
-					<p:outputLabel value="ID No." for="idNumber" />
-					<p:inputMask id="idNumber" 
-								 value="#{userController.user.IDNumber}"
-						         required="true"
-						         requiredMessage="ID No. is required" 
-						         mask="999999 9999 999"/>
+							<p:outputLabel value="Date Of Birth" for="dob"
+								styleClass="squared fillWidthOfParent" />
+							<p:calendar id="dob" value="#{userController.dateOfBirth}"
+								pattern="dd-MMMM-yyyy" locale="em" required="true"
+								requiredMessage="Date of Birth is required"
+								styleClass="squared fillWidthOfParent" />
+							<p:spacer />
+							<p:spacer />
 
-					<p:outputLabel value="Date Of Birth" for="dob" />
-					<p:calendar id="dob"
-								value="#{userController.dateOfBirth}"
-								pattern="dd-MMMM-yyyy"
-								locale="em"
-								required="true" 
-								requiredMessage="Date of Birth is required"/>
+							<p:outputLabel value="Cellphone No." for="cellphone"
+								styleClass="squared fillWidthOfParent" />
+							<p:inputMask id="cellphone"
+								value="#{userController.user.cellphone}" mask="999-999-9999"
+								styleClass="squared fillWidthOfParent" />
+							<p:spacer />
+							<p:spacer />
 
-					<p:outputLabel value="Cellphone No." for="cellphone" />
-					<p:inputMask id="cellphone"
-								 value="#{userController.user.cellphone}"
-						 		 mask="999-999-9999"/>
+							<p:outputLabel value="Income" for="income"
+								styleClass="squared fillWidthOfParent" />
+							<p:inputNumber id="income" value="#{userController.user.income}"
+								styleClass="squared fillWidthOfParent" />
+							<p:spacer />
+							<p:spacer />
 
-					<p:outputLabel value="Income" for="income" />
-					<p:inputNumber id="income" 
-								   value="#{userController.user.income}" />
+							<p:outputLabel value="Email Address" for="email"
+								styleClass="squared fillWidthOfParent" />
+							<p:inputText id="email" value="#{userController.user.email}"
+								validatorMessage="Email Address is invalid" autocomplete="false"
+								required="true" requiredMessage="Email Address is required"
+								styleClass="squared fillWidthOfParent">
 
-					<p:outputLabel value="Email Address" for="email" />
-					<p:inputText id="email" 
-								value="#{userController.user.email}" 
-								validatorMessage="Email Address is invalid"
-								autocomplete="false"
-								required="true"
-								requiredMessage="Email Address is required">
-								
-						<f:validator validatorId="custom.emailValidator" />
-					</p:inputText>
+								<f:validator validatorId="custom.emailValidator" />
+							</p:inputText>
+							<p:spacer />
+							<p:spacer />
 
-					<p:outputLabel value="Password" for="password" />
-					<p:password id="password" 
-								value="#{userController.password}"
-								required="true" 
-								requiredMessage="Password is a required"
-								autocomplete="false"/>
+							<p:outputLabel value="Password" for="password"
+								styleClass="squared fillWidthOfParent" />
+							<p:password id="password" value="#{userController.password}"
+								required="true" requiredMessage="Password is a required"
+								autocomplete="false" styleClass="squared fillWidthOfParent" />
+							<p:spacer />
+							<p:spacer />
 
-					<p:outputLabel value="Confirm Password" for="cpassword"/>
-					<p:password id="cpassword" 
-								value="#{userController.confirmPassword}"
-								required="true" 
-								requiredMessage="Password Confirmation is required" />
+							<p:outputLabel value="Confirm Password" for="cpassword"
+								styleClass="squared fillWidthOfParent" />
+							<p:password id="cpassword"
+								value="#{userController.confirmPassword}" required="true"
+								requiredMessage="Password Confirmation is required"
+								styleClass="squared fillWidthOfParent" />
+							<p:spacer />
+							<p:spacer />
 
-				</h:panelGrid>
-				<br />
+						</h:panelGrid>
+						<br />
 
-				<p:commandButton value="REGISTER" validateClient="true"
-					action="#{userController.register()}" ajax="true"
-					update=":registerForm"
-					 />
-			</p:panel>
-
-
+						<p:commandButton value="REGISTER" validateClient="true"
+							action="#{userController.register()}" ajax="true"
+							update=":registerForm" styleClass="squared fillWidthOfParent" />
+					</p:panel>
+				</div>
+			</div>
 		</h:form>
 		<script type="text/javascript">
-	    PrimeFaces.validator['custom.emailValidator'] = {
-	 
-	        pattern: /\S+@\S+/,
-	 
-	        validate: function(element, value) {
-	            //use element.data() to access validation metadata, in this case there is none.
-	            if(!this.pattern.test(value)) {
-	                throw {
-	                    summary: value + 'Validation Error.',
-	                    detail: value + ' is not a valid email.'
-	                }
-	            }
-	        }
-	    };
-	</script>
+			PrimeFaces.validator['custom.emailValidator'] = {
+
+				pattern : /\S+@\S+/,
+
+				validate : function(element, value) {
+					//use element.data() to access validation metadata, in this case there is none.
+					if (!this.pattern.test(value)) {
+						throw {
+							summary : value + 'Validation Error.',
+							detail : value + ' is not a valid email.'
+						}
+					}
+				}
+			};
+		</script>
 
 	</ui:define>
 </ui:composition>

@@ -8,7 +8,7 @@
 <ui:composition template="/views/templates/baseTemplate.xhtml">
 
 	<ui:define name="pageHeader">
-		<h2>Track Investment of: <small style="font-weight: normal;">#{investmentTrackerController.investment.monthlyBudget.month.toString()}  &nbsp; #{investmentTrackerController.investment.monthlyBudget.year}</small></h2>
+		<h2>Track Investment of: #{investmentTrackerController.investment.monthlyBudget.month.toString()} #{investmentTrackerController.investment.monthlyBudget.year}</h2>
 	</ui:define>
 	
 	<ui:define name="content">

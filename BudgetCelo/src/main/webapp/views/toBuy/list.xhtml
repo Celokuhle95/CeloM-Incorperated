@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<ui:composition template="/views/templates/baseTemplate.xhtml">
+
+	<ui:define name="pageHeader">
+		<h2>To Buy Items</h2>
+	</ui:define>
+	
+	<ui:define name="content">
+	<h:form id="toBuyForm">
+				
+		<p:panel styleClass="sectionPanel blankBackground" toggleable="true" id="toBuyInfo">	
+			<h:panelGrid columns="2">
+				<p:commandButton value="New"
+							onclick="PF('toBuyDialog').show();"
+							ajax="true"
+							action="#{toBuyController.reset()}"/>
+						
+				<p:panelGrid id="totalToBuys" columns="2" styleClass="seperateGridElements">
+					<p:outputLabel value="&nbsp;&nbsp; Total: &nbsp;&nbsp; "
+									styleClass="summaryCol" />
+					<p:outputLabel id="total"
+								value="R#{toBuyController.totalTobuys()}"
+								styleClass="summaryCol"/>
+				</p:panelGrid>
+		
+			</h:panelGrid>
+			
+			<br/>
+			
+			<p:dataTable var="toBuy" 
+						id="toBuys"
+						value="#{toBuyController.toBuys}"
+						editable="true" >
+						
+				<p:ajax event="rowEdit" update=":toBuyForm:totalToBuys"/>
+	
+				<p:column headerText="Name" sortBy="#{toBuy.name}" styleClass="centered">
+					<p:cellEditor>
+						<f:facet name="output">
+							<p:outputLabel value="#{toBuy.name}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{toBuy.name}" styleClass="fillWidthOfParent" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				<p:column headerText="Amount" sortBy="#{toBuy.amount}" styleClass="centered">
+					<p:cellEditor>
+						<f:facet name="output">
+							<p:outputLabel value="R#{toBuy.amount}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{toBuy.amount}" styleClass="fillWidthOfParent"/>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				<p:column headerText="Date" sortBy="#{toBuy.date}"
+					styleClass="centered">
+					<p:outputLabel value="#{toBuy.dateFormatted}" />
+				</p:column>
+				<p:column headerText="Time" sortBy="#{toBuy.time}"
+					styleClass="centered">
+					<p:outputLabel value="#{toBuy.timeFormatted}" />
+				</p:column>
+				<p:column headerText="Edit" styleClass="centered">
+					<p:rowEditor editTitle="Edit"/>
+				</p:column>
+				<p:column headerText="Remove" styleClass="centered">
+					<p:commandButton icon="ui-icon-trash" 
+									update=":toBuyForm"
+									title="Remove"
+									ajax="true">
+						<p:confirm header="Confirmation" message="Are you sure?"
+							icon="ui-icon-alert" />
+						<p:collector unique="false" value="#{toBuy}" 
+							removeFrom="#{toBuyController.toBuys}" />
+					</p:commandButton>
+				</p:column>
+
+			</p:dataTable>
+
+		</p:panel>
+		
+		<div class="centered"> 
+			<p:commandButton value="Update"
+							action="#{toBuyController.save()}"
+							ajax="true"
+							/>		
+		</div>
+		
+		<br/>
+		
+	</h:form>
+		
+	<h:form id="toBuyDialogForm">
+		<p:growl id="toBuyDialogGrowl" autoUpdate="true"/>
+		<p:dialog id="toBuyDialog"
+				 widgetVar="toBuyDialog" 
+				 closeOnEscape="true"
+				 closable="true"
+				 modal="true"
+				 showEffect="puff"
+				 styleClass="centralDialog" 
+				 header="New To Buy Item"
+				 responsive="true"
+				 resizable="false"
+				 >
+ 
+			<div class="centered">
+				<h:panelGrid columns="2" id="toBuyInfo" >
+
+						<p:outputLabel value="Name" for="name" />
+						<p:inputText id="name"
+							value="#{toBuyController.toBuy.name}" required="true"
+							requiredMessage="Name is required" />
+
+						<p:outputLabel value="Amount" for="amount" />
+						<p:inputMask id="amount"
+							value="#{toBuyController.toBuy.amount}" required="true"
+							requiredMessage="Amount is required">
+						</p:inputMask>
+
+						<p:outputLabel value="Type" for="type" />
+						<p:selectOneMenu id="type" styleClass="fillWidthOfParent"
+							value="#{toBuyController.toBuy.toBuyType}"
+							required="true" requiredMessage="To Buy Type is required">
+							<f:selectItem itemLabel="select" noSelectionOption="true" />
+							<f:selectItems value="#{toBuyController.types}" var="typesVar" />
+						</p:selectOneMenu>
+
+						<p:outputLabel value="Description" for="description" />
+						<p:inputTextarea  id="description" value="#{toBuyController.toBuy.description}"
+							required="true" requiredMessage="Description is required" />
+
+						<p:outputLabel value="Importance Level" for="importanceLevel" />
+						<p:selectOneMenu id="importanceLevel" styleClass="fillWidthOfParent"
+							value="#{toBuyController.toBuy.importanceLevel}"
+							required="true" requiredMessage="Importance Level is required">
+							<f:selectItem itemLabel="select" noSelectionOption="true" />
+							<f:selectItems value="#{toBuyController.types}" var="typesVar" />
+						</p:selectOneMenu>
+
+						<p:outputLabel value="Buy Year" for="year" />
+						<p:selectOneMenu id="year" styleClass="fillWidthOfParent"
+							value="#{toBuyController.toBuy.buyYear}"
+							required="true" requiredMessage="Year is required">
+							<f:selectItem itemLabel="select" noSelectionOption="true" />
+							<f:selectItems value="#{forwardMoverController.getSpecifiedPossibleYearsAhead(4)}" var="typesVar" />
+						</p:selectOneMenu>
+						
+						<p:outputLabel value="Buy Month" for="month" />
+						<p:selectOneMenu id="month" styleClass="fillWidthOfParent"
+							value="#{toBuyController.toBuy.buyMonth}"
+							required="true" requiredMessage="Month is required">
+							<f:selectItem itemLabel="select" noSelectionOption="true" />
+							<f:selectItems value="#{forwardMoverController.allPossibleMonthsInAYear}" var="typesVar" />
+						</p:selectOneMenu>
+					</h:panelGrid>
+				
+				<br/>
+				
+				<p:commandButton value="Add" 
+								update=":toBuyForm"
+								ajax="true"
+								action="#{toBuyController.addItem()}"
+								/>
+			</div>
+		</p:dialog>		
+	</h:form>
+	</ui:define>
+</ui:composition>
+</html>

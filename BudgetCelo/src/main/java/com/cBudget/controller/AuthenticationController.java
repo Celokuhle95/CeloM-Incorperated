@@ -44,7 +44,6 @@ public class AuthenticationController implements Serializable{
 	public void authenticate() {
 		ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
 		if(isSecuredPage(context)) {
-			System.out.println("SERVLTE pATH: ");
 			if(!isLoggedIn()) {
 				try {
 					context.redirect(context.getRequestContextPath() + "/login.xhtml");
@@ -58,13 +57,12 @@ public class AuthenticationController implements Serializable{
 	private boolean isSecuredPage(ExternalContext context) {
 		String servletPath = context.getRequestServletPath();
 		if(servletPath.contains("login")) {
-			System.out.println("MYEZA");
 			return false;
 		}
 		if(servletPath.contains("user/create")) {
 			return false;
 		}
-		System.out.println("CELO");
+		System.out.println("Is Secure Page");
 		return true;
 	}
 	

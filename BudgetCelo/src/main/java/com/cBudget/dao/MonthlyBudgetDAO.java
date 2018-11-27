@@ -36,9 +36,12 @@ public class MonthlyBudgetDAO extends BaseDAO<MonthlyBudget> {
 		CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
 		CriteriaQuery<MonthlyBudget> query = cb.createQuery(MonthlyBudget.class);
 		Root<MonthlyBudget> budget = query.from(MonthlyBudget.class);
+
 		Predicate userPredicate = getUserPredicate(cb, budget);
 		Predicate yearPredicate = cb.equal(budget.get("year"), year);
+
 		query.select(budget).where(cb.and(userPredicate, yearPredicate));
+
 		query.orderBy(cb.desc(budget.get("month")));
 		return createTypedQuery(query).getResultList();
 	}

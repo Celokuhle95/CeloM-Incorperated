@@ -20,5 +20,14 @@ public abstract class MonthlyBudget_ {
 	public static volatile ListAttribute<MonthlyBudget, InvestmentItem> investments;
 	public static volatile ListAttribute<MonthlyBudget, ExpenseItem> expenses;
 
+	public static final String INCOME = "income";
+	public static final String OWNER = "owner";
+	public static final String EXTRA_INCOME = "extraIncome";
+	public static final String MONTH = "month";
+	public static final String YEAR = "year";
+	public static final String ID = "id";
+	public static final String INVESTMENTS = "investments";
+	public static final String EXPENSES = "expenses";
+
 }
 

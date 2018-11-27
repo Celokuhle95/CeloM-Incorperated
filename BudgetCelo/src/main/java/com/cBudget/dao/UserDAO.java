@@ -12,7 +12,7 @@ import javax.persistence.criteria.Root;
 import com.cBudget.controller.utils.PasswordUtil;
 import com.cBudget.entity.User;
 import com.cBudget.entity.UserAuthentication;
-
+	
 @Named
 @RequestScoped
 public class UserDAO extends BaseDAO<User> implements Serializable{

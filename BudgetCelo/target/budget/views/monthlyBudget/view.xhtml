@@ -9,7 +9,7 @@
 <ui:composition template="/views/templates/budgetCreateEditTemplate.xhtml">
 	
 	<ui:define name="pageHeader">
-		<h2>Budget Details</h2>
+		<h2><b>#{monthlyBudgetController.monthlyBudget.month.toString()} Budget</b></h2>
 	</ui:define>
 
 	<ui:define name="submission">

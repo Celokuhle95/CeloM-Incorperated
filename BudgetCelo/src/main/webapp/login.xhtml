@@ -13,17 +13,32 @@
 	<ui:composition template="views/templates/baseTemplate.xhtml">
 		<ui:define name="content">
 			<h:form id="createExpenseForm">
-				<p:growl id="message" autoUpdate="true"/>
-				<div style="margin-top: 3%">
-					<h:panelGrid columns="1" rowClasses="loginRows">
-						<p:inputText value="#{authenticationController.authentication.username}"
-									 placeholder="email address" autocomplete="false"/>
-						<p:password value="#{authenticationController.authentication.password}" 
-									placeholder="password" autocomplete="false"/>
-						<p:commandButton value="LOGIN"
-										action="#{authenticationController.login()}" 
-										ajax="true"/>
-					</h:panelGrid>
+				<p:growl id="message" autoUpdate="true" />
+				<div class="noAuthenticationNeededPage">
+					<div class="box">
+						<h:panelGrid columns="1" rowClasses="loginRows"
+							styleClass="fillWidthOfParent">
+							<img src="#{resource['/images/moola.jpg']}"
+								style="border-radius: 50%; width: 50%"></img>
+							<br />
+							<br />
+							<p:inputText
+								value="#{authenticationController.authentication.username}"
+								placeholder="email address" autocomplete="false"
+								styleClass="squared fillWidthOfParent" />
+							<br />
+							<p:password
+								value="#{authenticationController.authentication.password}"
+								placeholder="password" autocomplete="false"
+								styleClass="squared fillWidthOfParent" />
+							<br />
+							<p:commandButton value="LOGIN"
+								action="#{authenticationController.login()}" ajax="true"
+								styleClass="squared fillWidthOfParent" />
+							<br />
+						</h:panelGrid>
+					</div>
+
 				</div>
 			</h:form>
 		</ui:define>

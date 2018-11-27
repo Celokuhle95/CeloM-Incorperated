@@ -1,6 +1,7 @@
 package com.cBudget.entity;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -21,6 +22,9 @@ public class ToBuyItem extends BudgetItem {
 
 	@Enumerated(EnumType.STRING)
 	private ToBuyType toBuyType;
+	
+	@Column
+	private String description;
 
 	@Enumerated(EnumType.STRING)
 	private ImportanceLevel importanceLevel;
@@ -34,6 +38,9 @@ public class ToBuyItem extends BudgetItem {
 	@Column
 	private boolean completed;
 	
+	@Column
+	private LocalDate dateCreated;
+	
 	@ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
 	@JoinColumn(name = "owner_id")
 	private User owner;
@@ -45,9 +52,12 @@ public class ToBuyItem extends BudgetItem {
 		this.importanceLevel = importanceLevel;
 		this.buyYear = buyYear;
 		this.buyMonth = buyMonth;
+		this.dateCreated = LocalDate.now();
+		this.dateCreated = LocalDate.now();
 	}
 
 	public ToBuyItem() {
+		this.dateCreated = LocalDate.now();
 	}
 
 	public ImportanceLevel getImportanceLevel() {
@@ -89,6 +99,14 @@ public class ToBuyItem extends BudgetItem {
 	public void setCompleted(boolean completed) {
 		this.completed = completed;
 	}
+	
+	public LocalDate getDateCreated() {
+		return dateCreated;
+	}
+
+	public void setDateCreated(LocalDate dateCreated) {
+		this.dateCreated = dateCreated;
+	}
 
 	public User getOwner() {
 		return owner;
@@ -98,4 +116,12 @@ public class ToBuyItem extends BudgetItem {
 		this.owner = owner;
 	}
 
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
 }

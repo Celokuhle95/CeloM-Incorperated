@@ -24,6 +24,7 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<configuration>
 					<outputDirectory>${env.JBOSS_HOME}\standalone\deployments\</outputDirectory>
+<!-- 					<outputDirectory>C:\myprograms\web servers\glassfish\glassfish-4.1.1\glassfish\domains\domain1\autodeploy\</outputDirectory> -->
 				</configuration>
 			</plugin>
 			<plugin>
@@ -58,11 +59,10 @@
 			<scope>provided</scope>
 		</dependency>
 
-
 		<dependency>
 			<groupId>org.primefaces</groupId>
 			<artifactId>primefaces</artifactId>
-			<version>6.1</version>
+			<version>6.2</version>
 		</dependency>
 
 		<dependency>
@@ -82,19 +82,6 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<version>42.2.1</version>
-			<scope>provided</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-			<version>5.2.12.Final</version>
 			<scope>provided</scope>
 		</dependency>
 
@@ -107,41 +94,49 @@
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-			<version>42.2.1</version>
+			<version>42.2.5</version>
+			<scope>provided</scope>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>5.3.7.Final</version>
 			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-jpamodelgen</artifactId>
-			<version>5.2.14.Final</version>
+			<version>5.3.7.Final</version>
 			<scope>provided</scope>
 		</dependency>
+
 
 		<dependency>
 			<groupId>com.sun.jersey</groupId>
 			<artifactId>jersey-server</artifactId>
 			<version>1.9</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.sun.jersey.contribs</groupId>
 			<artifactId>jersey-multipart</artifactId>
 			<version>1.9</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.fasterxml.jackson.jaxrs</groupId>
 			<artifactId>jackson-jaxrs-json-provider</artifactId>
 			<version>2.5.1</version>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/uk.com.robust-it/cloning -->
 		<dependency>
-		    <groupId>uk.com.robust-it</groupId>
-		    <artifactId>cloning</artifactId>
-		    <version>1.9.9</version>
+			<groupId>uk.com.robust-it</groupId>
+			<artifactId>cloning</artifactId>
+			<version>1.9.9</version>
 		</dependency>
-				
+
 	</dependencies>
 </project>

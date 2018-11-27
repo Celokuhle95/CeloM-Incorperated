@@ -17,5 +17,11 @@ public abstract class Tracker_ {
 	public static volatile SingularAttribute<Tracker, Integer> id;
 	public static volatile SingularAttribute<Tracker, LocalTime> time;
 
+	public static final String DATE = "date";
+	public static final String AMOUNT = "amount";
+	public static final String SUMMARY = "Summary";
+	public static final String ID = "id";
+	public static final String TIME = "time";
+
 }
 

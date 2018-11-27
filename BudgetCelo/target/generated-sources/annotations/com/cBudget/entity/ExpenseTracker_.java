@@ -10,5 +10,7 @@ public abstract class ExpenseTracker_ extends com.cBudget.entity.Tracker_ {
 
 	public static volatile SingularAttribute<ExpenseTracker, ExpenseItem> expense;
 
+	public static final String EXPENSE = "expense";
+
 }
 

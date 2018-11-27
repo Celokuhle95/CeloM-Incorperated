@@ -15,8 +15,8 @@ import com.cBudget.entity.enums.comparators.EnumComparator;
 
 @Named
 @SessionScoped
-public class ForwardMoverController implements Serializable{
-	
+public class ForwardMoverController implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
 	public SelectItem[] getPossibleYears() {
@@ -24,9 +24,9 @@ public class ForwardMoverController implements Serializable{
 	}
 
 	public SelectItem[] getPossibleMonths() {
-		return DropDownsUtil.getSelectItems(currentMonthAndSpecifiedMonthsAhead(1));
+		return DropDownsUtil.getSelectItems(currentMonthAndSpecifiedMonthsAhead(2));
 	}
-	
+
 	public SelectItem[] getAllPossibleMonthsInAYear() {
 		Map<Integer, Object> months = new TreeMap<>(EnumComparator.get());
 		for (Month month : Month.values()) {
@@ -34,7 +34,11 @@ public class ForwardMoverController implements Serializable{
 		}
 		return DropDownsUtil.getSelectItems(months);
 	}
-	
+
+	public SelectItem[] getSpecifiedPossibleYearsAhead(int numAllowedYears) {
+		return DropDownsUtil.getSelectItems(currentYearAndSpecifiedYearsAhead(numAllowedYears));
+	}
+
 	public Map<Integer, Object> currentMonthAndSpecifiedMonthsAhead(int numAllowedMonthsAhead) {
 		Map<Integer, Object> months = new TreeMap<>(EnumComparator.get());
 		Month currentMonth = BudgetDateUtil.getCurrentMonth();
@@ -45,10 +49,10 @@ public class ForwardMoverController implements Serializable{
 		}
 		return months;
 	}
-	
+
 	public Map<Integer, Object> calcPossibleYears() {
 		Month currentMonth = BudgetDateUtil.getCurrentMonth();
-		if(currentMonth.equals(Month.DECEMBER)) {
+		if (currentMonth.equals(Month.DECEMBER) || currentMonth.equals(Month.NOVEMBER)) {
 			return currentYearAndSpecifiedYearsAhead(1);
 		} else {
 			Map<Integer, Object> years = new TreeMap<>(EnumComparator.get());
@@ -68,9 +72,9 @@ public class ForwardMoverController implements Serializable{
 		}
 		return years;
 	}
-	
+
 	private Month nextMonth(Month currentMonth) {
-		if(currentMonth.equals(Month.DECEMBER)) {
+		if (currentMonth.equals(Month.DECEMBER)) {
 			return Month.JANUARY;
 		}
 		return Month.values()[currentMonth.ordinal() + 1];

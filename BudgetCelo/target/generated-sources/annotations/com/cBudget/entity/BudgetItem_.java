@@ -13,5 +13,9 @@ public abstract class BudgetItem_ {
 	public static volatile SingularAttribute<BudgetItem, String> name;
 	public static volatile SingularAttribute<BudgetItem, Integer> id;
 
+	public static final String AMOUNT = "amount";
+	public static final String NAME = "name";
+	public static final String ID = "id";
+
 }
 

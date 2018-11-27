@@ -14,7 +14,7 @@ import javax.persistence.criteria.Root;
  */
 public class BaseDAO<T> {
 
-	@PersistenceContext(unitName = "cBudgetPersistenceUnit")
+	@PersistenceContext(unitName = "budgetPU")
 	private EntityManager entityManager;
 
 	private Class<T> entityClass;
@@ -24,7 +24,14 @@ public class BaseDAO<T> {
 	}
 
 	public void create(T entity) {
-		entityManager.persist(entity);
+		try {
+			System.out.println("Creating " + entity.toString());
+			entityManager.persist(entity);
+			System.out.println("After " + entity.toString());
+		} catch (Exception e) {
+			System.out.println("Something went wrong");
+			e.printStackTrace();
+		}
 	}
 
 	public void edit(T entity) {
@@ -46,7 +53,7 @@ public class BaseDAO<T> {
 		q.select(entity);
 		return createTypedQuery(q).getResultList();
 	}
-	
+
 	protected <E> TypedQuery<E> createTypedQuery(CriteriaQuery<E> q) {
 		return getEntityManager().createQuery(q);
 	}
@@ -54,5 +61,5 @@ public class BaseDAO<T> {
 	protected EntityManager getEntityManager() {
 		return entityManager;
 	}
-	
+
 }

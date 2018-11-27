@@ -13,7 +13,7 @@ import com.cBudget.entity.Theme;
 @Named
 @ApplicationScoped
 public class HeaderController {
-	
+
 	public String currentDate() {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy");
 		LocalDate today = LocalDate.now();
